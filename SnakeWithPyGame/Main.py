@@ -1,23 +1,29 @@
 # Example file showing a circle moving on screen
 import pygame
 import math
+from Snake import Snake
 from tools import Direction
 
-# pygame setup
+# Pygame setup
 pygame.init()
+pygame.display.set_caption("Snake")
 clock = pygame.time.Clock()
+screen = pygame.display.set_mode((800, 600))
 running = True
 
-screen = pygame.display.set_mode((1400, 800))
+# Snake object setup
+snake = Snake(screen.get_width() / 2, screen.get_height() / 2)
+
+# Apple rectangle
+
+
+# Game variables
 dt = 0
-
-snake_head = pygame.Rect(screen.get_width() / 2, screen.get_height() / 2, 20, 20)
-snake_direction = Direction.NONE
-
 counter = 0
 
+
+# Main loop of game -------------------------------------------------------------------------
 while running:
-    counter += 1
     # pygame.QUIT event means the user clicked X to close your window
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -26,35 +32,24 @@ while running:
     # fill the screen with a color to wipe away anything from last frame
     screen.fill("#1f1f1f")
 
-    # Draw Player
-    pygame.draw.rect(screen, "red", snake_head)
+    # Draw snake object
+    snake.draw_snake(screen)
 
     # Event on pressed WSAD keys
     keys = pygame.key.get_pressed()
-    if keys[pygame.K_w]:
-        snake_direction = Direction.UP
-    elif keys[pygame.K_s]:
-        snake_direction = Direction.DOWN
-    elif keys[pygame.K_a]:
-        snake_direction = Direction.LEFT
-    elif keys[pygame.K_d]:
-        snake_direction = Direction.RIGHT
+    snake.key_event(keys)
 
-    # Move snake
+    # Update state of snake: position and directions of segments
     if counter >= 15:
         counter = 0
-        match snake_direction:
-            case Direction.UP:
-                snake_head.y -= 20
-            case Direction.DOWN:
-                snake_head.y += 20
-            case Direction.LEFT:
-                snake_head.x -= 20
-            case Direction.RIGHT:
-                snake_head.x += 20
+        if keys[pygame.K_p]:
+          snake.add_segment()
+        snake.update()
 
-    # flip() the display to put your work on screen
+    # Update everything on screen
     pygame.display.flip()
+
+    counter += 1
 
     # limits FPS to 60
     dt = clock.tick(60) / 1000
