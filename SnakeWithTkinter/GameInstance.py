@@ -80,11 +80,16 @@ class Board():
 
             self.move()
 
-            for i in range(len(self.snake.body)-1, 0, -1):
+            directions = ""
+            for i in range(len(self.snake.body)-1, -1, -1):
+                directions += str(self.snake.body[i].direction)+" "
                 self.snake.body[i].direction = self.snake.body[i-1].direction
+            print(directions)
 
             if (time.time()-self.TIME)*1000 > 200:
                 self.checkIfAppleBitten()
+
+            # print(self.snake.segmentDirections())
 
         self.root.after(self.TICK_DURATION, self.inGameClockTick)
 
@@ -96,24 +101,12 @@ class Board():
         prevTailY = prevTail.winfo_y()
 
         newTail = Snake.Segment(self.board)
-
-
-        # match prevTailDirection:
-        #     case Direction.UP:
-        #         newTail.segment.place(x=prevTailX,y=prevTailY+MOVEMENT_DISTANCE)
-        #     case Direction.DOWN:
-        #         newTail.segment.place(x=prevTailX,y=prevTailY-MOVEMENT_DISTANCE)
-        #     case Direction.RIGHT:
-        #         newTail.segment.place(x=prevTailX-MOVEMENT_DISTANCE,y=prevTailY)
-        #     case Direction.LEFT:
-        #         newTail.segment.place(x=prevTailX+MOVEMENT_DISTANCE,y=prevTailY)
-        #     case _:
-        #         newTail.segment.place(x=250,y=250)
-
-        newTail.segment.place(x=prevTailX,y=prevTailY)
-        newTail.direction = prevTailDirection
+        newTail.segment.place(x=-100, y=-100)
 
         self.snake.body.append(newTail)
+
+        newTail.segment.place(x=prevTailX, y=prevTailY)
+        newTail.direction = prevTailDirection
 
     def move(self):
         self.INITIAL = False

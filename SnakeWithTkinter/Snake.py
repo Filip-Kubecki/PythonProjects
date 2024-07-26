@@ -16,7 +16,6 @@ class Snake():
     def setHeadDirection(self, direction):
             self.body[0].direction = direction
 
-
     class Segment():
         def __init__(self, root):
             self.direction = Direction.NONE
@@ -36,6 +35,24 @@ class Snake():
         #         case Direction.LEFT:
         #             self.segment.place(x=segmentX-MOVEMENT_DISTANCE,y=segmentY)
             
+def directionToString(direction):
+     match direction:
+          case Direction.NONE:
+               return "none"
+          case Direction.RIGHT:
+               return "Right"
+          case Direction.LEFT:
+               return "Left"
+          case Direction.UP:
+               return "Up"
+          case Direction.DOWN:
+               return "Down"
+          case _:
+               return "ERROR"
+          
+
+     return
+
 class Direction(Enum):
         NONE = 0
         RIGHT = 1
