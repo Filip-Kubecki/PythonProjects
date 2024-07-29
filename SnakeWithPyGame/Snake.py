@@ -20,18 +20,30 @@ class Snake():
         for segment in self.segments:
             segment.draw_segment(screen)
 
-    def update(self):
+    def update(self, screen):
         self.self_collision()
         for segment in self.segments:
             match segment.direction:
                 case Direction.UP:
-                    segment.rect.y -= 20
+                    if segment.rect.y <= 0:
+                        segment.rect.y = screen.get_height()-20
+                    else:
+                        segment.rect.y -= 20
                 case Direction.DOWN:
-                    segment.rect.y += 20
+                    if segment.rect.y >= screen.get_height()-20:
+                        segment.rect.y = 0
+                    else:
+                        segment.rect.y += 20
                 case Direction.LEFT:
-                    segment.rect.x -= 20
+                    if segment.rect.x <= 0:
+                        segment.rect.x = screen.get_width()-20
+                    else:
+                        segment.rect.x -= 20
                 case Direction.RIGHT:
-                    segment.rect.x += 20
+                    if segment.rect.x >= screen.get_width()-20:
+                        segment.rect.x = 0
+                    else:
+                        segment.rect.x += 20
         self.update_direction()
 
     def update_direction(self):
