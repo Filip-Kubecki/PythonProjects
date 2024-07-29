@@ -1,10 +1,9 @@
-# Example file showing a circle moving on screen
 import pygame
-import math
 from Snake import Snake
 from PausedGameScreen import PausedGameScreen
 from Apple import Apple
-from tools import Direction
+import tools
+import math
 
 # Pygame setup
 pygame.init()
@@ -12,6 +11,10 @@ pygame.display.set_caption("Snake")
 clock = pygame.time.Clock()
 screen = pygame.display.set_mode((800, 600))
 running = True
+
+# Backgroung setup
+bgTile = pygame.image.load('SnakeWithPyGame\\img\\backgroundTile.png')
+tools.tileBackground(screen, bgTile)
 
 # Snake object setup
 snake = Snake(screen.get_width() // 2, (screen.get_height() // 2))
@@ -30,7 +33,7 @@ pause_game = False
 gameTick = 15
 
 
-# Main loop of game -------------------------------------------------------------------------
+# Main loop of game -----------------------------------------------------------------------------------------------
 while running:
     # pygame.QUIT event means the user clicked X to close window
     for event in pygame.event.get():
@@ -42,7 +45,7 @@ while running:
             running = False
 
     # fill the screen with a color to wipe away anything from last frame
-    screen.fill("#1f1f1f")
+    tools.tileBackground(screen, bgTile)
 
     # Draw apple object
     apple.draw_apple(screen)

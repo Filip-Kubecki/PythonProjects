@@ -1,13 +1,16 @@
 import pygame
+import pygame.freetype
 
 class PausedGameScreen(pygame.Surface):
     def __init__(self, x, y):
-        super().__init__((x,y))
-        self.font = pygame.font.SysFont("Arial", 30)
-        self.text = self.font.render("Paused", False, "Black")
-        
-        self.color = "#444444"
-        self.fill(self.color)
+        super().__init__((x,y), pygame.SRCALPHA)
+        self.font = pygame.freetype.SysFont('Sans', 50)
+
+        self.text = "Paused"
+        self.text_rect = self.font.get_rect(self.text)
+        # self.convert_alpha()
+        self.fill((168, 168, 168, 150))
         
     def display(self, screen):
-        self.blit(self.text, ((self.get_width()//2)-(self.text.get_width()//2),self.get_height()//2))
+        self.font.render_to(screen, ((screen.get_width() // 2)-(self.text_rect.width // 2), 150), self.text, "black")
+        # self.blit(self.text, ((self.get_width() // 2)-(self.text.get_width() // 2), 50))

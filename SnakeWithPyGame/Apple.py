@@ -4,7 +4,7 @@ from tools import Direction
 
 class Apple():
     def __init__(self):
-        self.color = "#03d3ff"
+        self.color = "#db4949"
         self.rect = pygame.rect.Rect(10000, 10000, 20, 20)
 
     def draw_apple(self, screen):

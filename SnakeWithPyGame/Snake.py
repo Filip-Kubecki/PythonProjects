@@ -5,13 +5,15 @@ class Snake():
     def __init__(self, x, y):
         self.segments = list()
         self.segments.append(Segment(x, y))
+        self.add_segment()
 
     def self_collision(self):
         # TODO: end game on collision
         head = self.segments[0]
         for segment in self.segments[1:]:
             if head.rect.colliderect(segment.rect):
-                self.segments[0].color = "#ff1216"
+                # self.segments[0].color = "#db4949"
+                pass
         
     def change_direction(self, new_direction):
         self.segments[0].direction = new_direction
@@ -81,7 +83,7 @@ class Snake():
 class Segment():
     def __init__(self, x ,y):
         self.direction = Direction.NONE
-        self.color = "#00ff13"
+        self.color = "#77b875"
         self.rect = pygame.rect.Rect(x, y, 20, 20)
 
     def draw_segment(self, screen):
