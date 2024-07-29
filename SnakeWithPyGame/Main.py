@@ -1,6 +1,7 @@
 import pygame
 from Snake import Snake
 from PausedGameScreen import PausedGameScreen
+from GameOverScreen import GameOverScreen
 from Apple import Apple
 import tools
 import math
@@ -26,10 +27,14 @@ apple.set_random_position(screen)
 # Pause screen
 pause_screen = PausedGameScreen(300, 400)
 
+# Pause screen
+game_over_screen = GameOverScreen(300, 300)
+
 # Game variables
 dt = 0
 counter = 0
 pause_game = False
+game_over = False
 gameTick = 15
 
 
@@ -67,12 +72,14 @@ while running:
         gameTick = 60
     elif keys[pygame.K_o]:
         gameTick = 15
+    elif keys[pygame.K_i]:
+        gameTick = 8
             
 
     # Update state of snake: position and directions of segments
     if counter >= gameTick:
         counter = 0
-        if not pause_game:
+        if not pause_game and not game_over:
             snake.update(screen)
 
     # Snake eats apple
@@ -80,10 +87,17 @@ while running:
         snake.add_segment()
         apple.set_random_position(screen)
 
-    counter += 1
+    # Self collision - game over
+    if snake.self_collision():
+        screen.blit(game_over_screen,((screen.get_width()//2)-(game_over_screen.get_width()//2), (screen.get_height()//2)-(game_over_screen.get_height()//2)))
+        game_over_screen.display(screen)
+        game_over = True
 
     # Update everything on screen
     pygame.display.flip()
+
+    # Update in game timmer
+    counter += 1
 
     # limits FPS to 60
     dt = clock.tick(60) / 1000

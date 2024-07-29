@@ -5,15 +5,17 @@ class Snake():
     def __init__(self, x, y):
         self.segments = list()
         self.segments.append(Segment(x, y))
-        self.add_segment()
+        # self.segments.append(Segment(x, y+20))
+        # self.add_segment()
 
     def self_collision(self):
-        # TODO: end game on collision
         head = self.segments[0]
         for segment in self.segments[1:]:
             if head.rect.colliderect(segment.rect):
                 # self.segments[0].color = "#db4949"
-                pass
+                return True
+        
+        return False
         
     def change_direction(self, new_direction):
         self.segments[0].direction = new_direction
