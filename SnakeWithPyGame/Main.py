@@ -4,7 +4,6 @@ from PausedGameScreen import PausedGameScreen
 from GameOverScreen import GameOverScreen
 from Apple import Apple
 import tools
-import math
 
 # Pygame setup
 pygame.init()
@@ -14,7 +13,8 @@ screen = pygame.display.set_mode((800, 600))
 running = True
 
 # Backgroung setup
-bgTile = pygame.image.load('SnakeWithPyGame\\img\\backgroundTile.png')
+bgTile = pygame.image.load(
+    'img/backgroundTile.png')
 tools.tileBackground(screen, bgTile)
 
 # Snake object setup
@@ -38,7 +38,7 @@ game_over = False
 gameTick = 15
 
 
-# Main loop of game -----------------------------------------------------------------------------------------------
+# Main loop of game -------------------------------------------------------------------------
 while running:
     # pygame.QUIT event means the user clicked X to close window
     for event in pygame.event.get():
@@ -60,7 +60,8 @@ while running:
 
     # display pause screen
     if pause_game:
-        screen.blit(pause_screen,((screen.get_width()//2)-(pause_screen.get_width()//2), (screen.get_height()//2)-(pause_screen.get_height()//2)))
+        screen.blit(pause_screen, ((screen.get_width()//2)-(pause_screen.get_width()//2),
+                    (screen.get_height()//2)-(pause_screen.get_height()//2)))
         pause_screen.display(screen)
 
     # Snake reacting to key events
@@ -74,7 +75,6 @@ while running:
         gameTick = 15
     elif keys[pygame.K_i]:
         gameTick = 8
-            
 
     # Update state of snake: position and directions of segments
     if counter >= gameTick:
@@ -89,7 +89,8 @@ while running:
 
     # Self collision - game over
     if snake.self_collision():
-        screen.blit(game_over_screen,((screen.get_width()//2)-(game_over_screen.get_width()//2), (screen.get_height()//2)-(game_over_screen.get_height()//2)))
+        screen.blit(game_over_screen, ((screen.get_width()//2)-(game_over_screen.get_width()//2),
+                    (screen.get_height()//2)-(game_over_screen.get_height()//2)))
         game_over_screen.display(screen)
         game_over = True
 

@@ -1,6 +1,7 @@
 import pygame
 from tools import Direction
 
+
 class Snake():
     def __init__(self, x, y):
         self.segments = list()
@@ -14,11 +15,13 @@ class Snake():
             if head.rect.colliderect(segment.rect):
                 # self.segments[0].color = "#db4949"
                 return True
-        
         return False
-        
+
     def change_direction(self, new_direction):
-        self.segments[0].direction = new_direction
+        if not (self.segments[0].direction is Direction.UP and new_direction is Direction.DOWN or self.segments[0].direction is Direction.DOWN and new_direction is Direction.UP or
+                self.segments[0].direction is Direction.RIGHT and new_direction is Direction.LEFT or
+                self.segments[0].direction is Direction.LEFT and new_direction is Direction.RIGHT):
+            self.segments[0].direction = new_direction
 
     def draw_snake(self, screen):
         for segment in self.segments:
@@ -30,8 +33,7 @@ class Snake():
             match segment.direction:
                 case Direction.UP:
                     if segment.rect.y <= 0:
-                        segment.rect.y = screen.get_height()-20
-                    else:
+                        segment.rect.y = screen.get_height()-20 else:
                         segment.rect.y -= 20
                 case Direction.DOWN:
                     if segment.rect.y >= screen.get_height()-20:
@@ -60,14 +62,14 @@ class Snake():
         new_segment = Segment(tail.rect.x, tail.rect.y)
 
         match tail.direction:
-                case Direction.UP:
-                    new_segment.rect.y += 20
-                case Direction.DOWN:
-                    new_segment.rect.y -= 20
-                case Direction.LEFT:
-                    new_segment.rect.x += 20
-                case Direction.RIGHT:
-                    new_segment.rect.x -= 20
+            case Direction.UP:
+                new_segment.rect.y += 20
+            case Direction.DOWN:
+                new_segment.rect.y -= 20
+            case Direction.LEFT:
+                new_segment.rect.x += 20
+            case Direction.RIGHT:
+                new_segment.rect.x -= 20
 
         new_segment.direction = tail.direction
         self.segments.append(new_segment)
@@ -82,14 +84,15 @@ class Snake():
         elif key_event[pygame.K_d]:
             self.change_direction(Direction.RIGHT)
 
+
 class Segment():
-    def __init__(self, x ,y):
+    def __init__(self, x, y):
         self.direction = Direction.NONE
         self.color = "#77b875"
         self.rect = pygame.rect.Rect(x, y, 20, 20)
 
     def draw_segment(self, screen):
-        pygame.draw.rect(screen, self.color, self.rect)    
+        pygame.draw.rect(screen, self.color, self.rect)
 
     def change_direction(self, new_direction):
         self.direction = new_direction
