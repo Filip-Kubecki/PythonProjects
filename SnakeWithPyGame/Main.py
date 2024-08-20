@@ -9,12 +9,12 @@ import tools
 pygame.init()
 pygame.display.set_caption("Snake")
 clock = pygame.time.Clock()
-screen = pygame.display.set_mode((800, 600))
+screen = pygame.display.set_mode((1000, 800))
 running = True
 
 # Backgroung setup
 bgTile = pygame.image.load(
-    'img/backgroundTile.png')
+    '/home/bork/PythonProjects/SnakeWithPyGame/img/backgroundTile.png')
 tools.tileBackground(screen, bgTile)
 
 # Snake object setup

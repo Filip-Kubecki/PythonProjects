@@ -33,7 +33,8 @@ class Snake():
             match segment.direction:
                 case Direction.UP:
                     if segment.rect.y <= 0:
-                        segment.rect.y = screen.get_height()-20 else:
+                        segment.rect.y = screen.get_height()-20
+                    else:
                         segment.rect.y -= 20
                 case Direction.DOWN:
                     if segment.rect.y >= screen.get_height()-20:

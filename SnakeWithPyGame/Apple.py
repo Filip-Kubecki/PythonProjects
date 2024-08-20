@@ -2,13 +2,15 @@ import pygame
 import random
 from tools import Direction
 
+
 class Apple():
     def __init__(self):
-        self.color = "#db4949"
         self.rect = pygame.rect.Rect(10000, 10000, 20, 20)
+        self.appleIcon = pygame.image.load(
+            '/home/bork/PythonProjects/SnakeWithPyGame/img/apple.png')
 
     def draw_apple(self, screen):
-        pygame.draw.rect(screen, self.color, self.rect) 
+        screen.blit(self.appleIcon, (self.rect.x, self.rect.y))
 
     def set_random_position(self, screen):
         self.rect.x = random.randrange(0, screen.get_width(), 20)
