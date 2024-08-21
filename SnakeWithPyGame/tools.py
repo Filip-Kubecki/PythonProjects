@@ -18,8 +18,14 @@ def tileBackground(screen: pygame.display, image: pygame.Surface):
 
 
 class Direction(Enum):
+    NONE = 0
     RIGHT = 1
     LEFT = 2
     UP = 3
     DOWN = 4
-    NONE = 5
+
+
+class Snake_texture_state(Enum):
+    HEAD = 1
+    SEGMENT = 2
+    TAIL = 3
