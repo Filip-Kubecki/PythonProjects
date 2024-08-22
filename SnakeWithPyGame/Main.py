@@ -33,6 +33,7 @@ game_over_screen = GameOverScreen(300, 300)
 # Game variables
 dt = 0
 counter = 0
+game_started = False
 pause_game = False
 game_over = False
 gameTick = 15
@@ -59,27 +60,32 @@ while running:
     snake.draw_snake(screen)
 
     # display pause screen
-    if pause_game:
+    if pause_game and not game_over:
         screen.blit(pause_screen, ((screen.get_width()//2)-(pause_screen.get_width()//2),
                     (screen.get_height()//2)-(pause_screen.get_height()//2)))
         pause_screen.display(screen)
 
     # Snake reacting to key events
     keys = pygame.key.get_pressed()
+
+    # Start game when WSAD pressed
+    if keys[pygame.K_w] or keys[pygame.K_s] or keys[pygame.K_a] or keys[pygame.K_d]:
+        game_started = True
+
     snake.key_event(keys)
 
     # Change pace of the game
-    if keys[pygame.K_p]:
+    if keys[pygame.K_3]:
         gameTick = 60
-    elif keys[pygame.K_o]:
+    elif keys[pygame.K_2]:
         gameTick = 15
-    elif keys[pygame.K_i]:
-        gameTick = 8
+    elif keys[pygame.K_1]:
+        gameTick = 5
 
     # Update state of snake: position and directions of segments
     if counter >= gameTick:
         counter = 0
-        if not pause_game and not game_over:
+        if not pause_game and not game_over and game_started:
             snake.update(screen)
 
     # Snake eats apple
