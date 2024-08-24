@@ -72,14 +72,15 @@ while running:
     if keys[pygame.K_w] or keys[pygame.K_s] or keys[pygame.K_a] or keys[pygame.K_d]:
         game_started = True
 
+    # Snake reacts to key input
     snake.key_event(keys)
 
     # Change pace of the game
-    if keys[pygame.K_3]:
+    if keys[pygame.K_1]:
         gameTick = 60
     elif keys[pygame.K_2]:
         gameTick = 15
-    elif keys[pygame.K_1]:
+    elif keys[pygame.K_3]:
         gameTick = 5
 
     # Update state of snake: position and directions of segments
