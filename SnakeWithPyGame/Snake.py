@@ -7,14 +7,22 @@ from tools import Snake_texture_state
 class Snake():
     def __init__(self, x, y):
         self.segments = list()
+        self.current_direction = Direction.NONE
 
         # Setting up head
         self.segments.append(Segment(x, y))
         self.segments[0].texture_state = Snake_texture_state.HEAD
         self.segments[0].change_texture()
 
+        # Setting up initial segments - right now one
+        new_segment = Segment(x, y+20)
+        new_segment.direction = Direction.UP
+        new_segment.texture_state = Snake_texture_state.SEGMENT
+        new_segment.change_texture()
+        self.segments.append(new_segment)
+
         # Setting up tail
-        tail = Segment(x, y+20)
+        tail = Segment(x, y+40)
         tail.direction = Direction.UP
         self.segments.append(tail)
 
@@ -27,10 +35,10 @@ class Snake():
 
     def change_direction(self, new_direction):
         # Protecting user from turning snake head in the direction of its body
-        if not (self.segments[0].direction is Direction.UP and new_direction is Direction.DOWN or
-                self.segments[0].direction is Direction.DOWN and new_direction is Direction.UP or
-                self.segments[0].direction is Direction.RIGHT and new_direction is Direction.LEFT or
-                self.segments[0].direction is Direction.LEFT and new_direction is Direction.RIGHT):
+        if not (self.current_direction is Direction.UP and new_direction is Direction.DOWN or
+                self.current_direction is Direction.DOWN and new_direction is Direction.UP or
+                self.current_direction is Direction.RIGHT and new_direction is Direction.LEFT or
+                self.current_direction is Direction.LEFT and new_direction is Direction.RIGHT):
             self.segments[0].direction = new_direction
 
     def draw_snake(self, screen):
@@ -38,7 +46,10 @@ class Snake():
             segment.draw_segment(screen)
 
     def update(self, screen):
+        self.current_direction = self.segments[0].direction
+
         self.self_collision()
+
         for segment in self.segments:
             match segment.direction:
                 case Direction.UP:
