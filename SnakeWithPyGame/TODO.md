@@ -11,5 +11,3 @@ TODO:
 
 Bugs:
 - only tail changes into bend segment (it should be the one that doesn't)
-- rotate head after game clock TICK. Right now it is possible to rotate head mid move and during pause screen
-- user can pause game over game over screen

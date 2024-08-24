@@ -31,7 +31,8 @@ class Snake():
                 self.segments[0].direction is Direction.DOWN and new_direction is Direction.UP or
                 self.segments[0].direction is Direction.RIGHT and new_direction is Direction.LEFT or
                 self.segments[0].direction is Direction.LEFT and new_direction is Direction.RIGHT):
-            self.segments[0].change_direction(new_direction)
+            # self.segments[0].change_direction(new_direction)
+            self.segments[0].direction = new_direction
 
     def draw_snake(self, screen):
         for segment in self.segments:
@@ -65,6 +66,9 @@ class Snake():
 
     def update_direction(self):
         prev_direction = self.segments[0].direction
+
+        # Rotating HEAD texture without changing directino - direction set to current direction
+        self.segments[0].change_direction(self.segments[0].direction)
 
         # Iterate over segments excluding HEAD
         if len(self.segments) > 1:
