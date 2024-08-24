@@ -11,4 +11,4 @@ TODO:
 - improve pause and game over screens
 
 Bugs:
-- because change in HEAD direction can be applied multiple times before HEAD texture changes its rotation and place, user can collide head into SEGMENT. Self collision detection need fixing
+- NONE
