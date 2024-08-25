@@ -27,6 +27,47 @@ def two_values_centering_offset(outer_value, inner_value):
     return ((outer_value // 2) - (inner_value // 2))
 
 
+def game_pace(keys, game_tick):
+    # Change pace of the game
+    if keys[pygame.K_1]:
+        game_tick = 60
+    elif keys[pygame.K_2]:
+        game_tick = 10
+    elif keys[pygame.K_3]:
+        game_tick = 5
+    elif keys[pygame.K_EQUALS]:
+        game_tick += 1
+    elif keys[pygame.K_MINUS] and game_tick > 0:
+        game_tick -= 1
+
+    return game_tick
+
+
+def check_if_mouse_collide(mouse_pos, object_pos, object_size):
+    # print(mouse_pos, object_pos, object_size)
+    if (mouse_pos[0] > object_pos[0] and
+        mouse_pos[0] <= object_pos[0]+object_size[0] and
+            mouse_pos[1] > object_pos[1] and
+            mouse_pos[1] <= object_pos[1]+object_size[1]):
+        return True
+
+    return False
+
+
+def mouse_button_down():
+    events = pygame.event.get()
+
+    for event in events:
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            return True
+
+    return False
+
+
+def shit():
+    print("SHIT")
+
+
 class Direction(Enum):
     NONE = 0
     RIGHT = 1

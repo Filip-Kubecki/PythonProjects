@@ -1,5 +1,6 @@
 import pygame
 import Textures_src
+import config
 from tools import Direction
 from tools import Snake_texture_state
 
@@ -9,20 +10,24 @@ class Snake():
         self.segments = list()
         self.current_direction = Direction.NONE
 
+        next_segment_y = 20
+
         # Setting up head
         self.segments.append(Segment(x, y))
         self.segments[0].texture_state = Snake_texture_state.HEAD
         self.segments[0].change_texture()
 
         # Setting up initial segments - right now one
-        new_segment = Segment(x, y+20)
-        new_segment.direction = Direction.UP
-        new_segment.texture_state = Snake_texture_state.SEGMENT
-        new_segment.change_texture()
-        self.segments.append(new_segment)
+        for i in range(config.SNAKE_SEGMENT_NUMBER - 2):
+            new_segment = Segment(x, y+next_segment_y)
+            next_segment_y += 20
+            new_segment.direction = Direction.UP
+            new_segment.texture_state = Snake_texture_state.SEGMENT
+            new_segment.change_texture()
+            self.segments.append(new_segment)
 
         # Setting up tail
-        tail = Segment(x, y+40)
+        tail = Segment(x, y+next_segment_y)
         tail.direction = Direction.UP
         self.segments.append(tail)
 

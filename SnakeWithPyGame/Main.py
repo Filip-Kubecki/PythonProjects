@@ -1,10 +1,12 @@
 import pygame
+import Style
 import tools
 import pygame.freetype
 import Textures_src
 from GameInstance import GameInstance
 from PausedGameScreen import PausedGameScreen
 from GameOverScreen import GameOverScreen
+from Button import Button
 
 SCREEN_WIDTH = 850
 SCREEN_HEIGHT = 700
@@ -21,18 +23,19 @@ board = GameInstance()
 
 # Pause screen
 pause_screen = PausedGameScreen(SCREEN_WIDTH, SCREEN_HEIGHT)
+pause_oppacity = 0
 
 # Game Over screen
 game_over_screen = GameOverScreen(SCREEN_WIDTH, SCREEN_HEIGHT)
 
 # Game variables
-delta_time = 0  # time in seconds since last frame - used for limiting framerate
+delta_time = 0  # time in seconds since last frame - used for limiting FPS
 counter = 0
 
 game_started = False
 pause_game = False
 game_over = False
-gameTick = 10
+game_tick = 10
 
 score = 0
 
@@ -41,6 +44,7 @@ apple_icon = pygame.image.load(Textures_src.APPLE)
 apple_icon = pygame.transform.scale_by(apple_icon, 1.6)
 
 ui_font = pygame.freetype.SysFont('JetBrainsMono NFM, thin', 28)
+random_button = Button(40, 40, Textures_src.BACKGROUND_GAME_TILE)
 
 # Main loop of game -----------------------------------------------------------
 while running:
@@ -58,10 +62,10 @@ while running:
         game_over = True
 
     # Main surface background
-    screen.fill((120, 156, 53))
-    pygame.draw.rect(
+    screen.fill(Style.DARK_GREEN)
+    pygame.draw.rect(  # Border around board
         screen,
-        (79, 97, 42),   # Color of the border
+        Style.DARK_BROWN,   # Color of the border
         pygame.Rect(20, 70, 810, 610),
         7,              # Border width
         7               # Border radius
@@ -73,18 +77,22 @@ while running:
         screen,
         (75, 28),
         score.__str__(),
-        (230, 250, 210)
+        Style.CREAMY_WHITE
     )
+    random_button.display(screen)
+    random_button.mouse_click(tools.shit)
 
     # Run one board cycle
     board.run_game_cycle()
 
     # Check if snake ate apple - increase score
     if board.apple_eaten():
-        score += 100
+        score += 10
 
     # Taking keyboard input
     keys = pygame.key.get_pressed()
+
+    game_tick = tools.game_pace(keys, game_tick)
 
     # Start game when WSAD pressed
     if (keys[pygame.K_w] or
@@ -93,16 +101,8 @@ while running:
             keys[pygame.K_d]):
         game_started = True
 
-    # Change pace of the game
-    if keys[pygame.K_1]:
-        gameTick = 60
-    elif keys[pygame.K_2]:
-        gameTick = 10
-    elif keys[pygame.K_3]:
-        gameTick = 5
-
     # Update state of snake: position and directions of segments
-    if counter >= gameTick:
+    if counter >= game_tick:
         counter = 0
         if not pause_game and not game_over and game_started:
             board.snake_update()
@@ -119,10 +119,17 @@ while running:
 
     # display pause screen
     if pause_game and not game_over:
+        if pause_oppacity < 150:
+            pause_oppacity += 15
+
+        pause_screen.fill((20, 20, 20, pause_oppacity))
         screen.blit(
             pause_screen,
-            tools.two_surfaces_centering_offset(screen, pause_screen))
+            tools.two_surfaces_centering_offset(screen, pause_screen)
+        )
         pause_screen.display(screen)
+    else:
+        pause_oppacity = 0
 
     # Update everything on screen
     pygame.display.flip()
