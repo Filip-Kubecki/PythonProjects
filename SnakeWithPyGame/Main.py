@@ -1,45 +1,38 @@
 import pygame
-from Snake import Snake
+import tools
+from GameInstance import GameInstance
 from PausedGameScreen import PausedGameScreen
 from GameOverScreen import GameOverScreen
-from Apple import Apple
-import tools
+
+SCREEN_WIDTH = 850
+SCREEN_HEIGHT = 700
 
 # Pygame setup
 pygame.init()
 pygame.display.set_caption("Snake")
 clock = pygame.time.Clock()
-screen = pygame.display.set_mode((1000, 800))
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 running = True
 
-# Backgroung setup
-bgTile = pygame.image.load(
-    '/home/bork/PythonProjects/SnakeWithPyGame/img/backgroundTile.png')
-tools.tileBackground(screen, bgTile)
-
-# Snake object setup
-snake = Snake(screen.get_width() // 2, (screen.get_height() // 2))
-
-# Apple object setup
-apple = Apple()
-apple.set_random_position(screen)
+# Create Board object
+board = GameInstance()
 
 # Pause screen
-pause_screen = PausedGameScreen(300, 400)
+pause_screen = PausedGameScreen(SCREEN_WIDTH, SCREEN_HEIGHT)
 
 # Pause screen
-game_over_screen = GameOverScreen(300, 300)
+game_over_screen = GameOverScreen(SCREEN_WIDTH, SCREEN_HEIGHT)
 
 # Game variables
-dt = 0
+delta_time = 0  # time in seconds since last frame - used for limiting framerate
 counter = 0
 game_started = False
 pause_game = False
 game_over = False
-gameTick = 15
+gameTick = 10
 
 
-# Main loop of game -------------------------------------------------------------------------
+# Main loop of game -----------------------------------------------------------
 while running:
     # pygame.QUIT event means the user clicked X to close window
     for event in pygame.event.get():
@@ -50,36 +43,27 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
-    # fill the screen with a color to wipe away anything from last frame
-    tools.tileBackground(screen, bgTile)
+    # Main surface background
+    screen.fill("grey")
 
-    # Draw apple object
-    apple.draw_apple(screen)
+    # Run one board cycle
+    board.run_game_cycle()
 
-    # Draw snake object
-    snake.draw_snake(screen)
-
-    # display pause screen
-    if pause_game and not game_over:
-        screen.blit(pause_screen, ((screen.get_width()//2)-(pause_screen.get_width()//2),
-                    (screen.get_height()//2)-(pause_screen.get_height()//2)))
-        pause_screen.display(screen)
-
-    # Snake reacting to key events
+    # Taking keyboard input
     keys = pygame.key.get_pressed()
 
     # Start game when WSAD pressed
-    if keys[pygame.K_w] or keys[pygame.K_s] or keys[pygame.K_a] or keys[pygame.K_d]:
+    if (keys[pygame.K_w] or
+        keys[pygame.K_s] or
+        keys[pygame.K_a] or
+            keys[pygame.K_d]):
         game_started = True
-
-    # Snake reacts to key input
-    snake.key_event(keys)
 
     # Change pace of the game
     if keys[pygame.K_1]:
         gameTick = 60
     elif keys[pygame.K_2]:
-        gameTick = 15
+        gameTick = 10
     elif keys[pygame.K_3]:
         gameTick = 5
 
@@ -87,19 +71,25 @@ while running:
     if counter >= gameTick:
         counter = 0
         if not pause_game and not game_over and game_started:
-            snake.update(screen)
+            board.snake_update()
 
-    # Snake eats apple
-    if apple.rect.colliderect(snake.segments[0].rect):
-        snake.add_segment()
-        apple.set_random_position(screen)
+    # Display game instance surface
+    screen.blit(board.screen, (25, 75))
 
     # Self collision - game over
-    if snake.self_collision():
-        screen.blit(game_over_screen, ((screen.get_width()//2)-(game_over_screen.get_width()//2),
-                    (screen.get_height()//2)-(game_over_screen.get_height()//2)))
+    if board.snake_collision_game_over():
+        screen.blit(
+            game_over_screen,
+            tools.two_surfaces_centering_offset(screen, game_over_screen))
         game_over_screen.display(screen)
         game_over = True
+
+    # display pause screen
+    if pause_game and not game_over:
+        screen.blit(
+            pause_screen,
+            tools.two_surfaces_centering_offset(screen, pause_screen))
+        pause_screen.display(screen)
 
     # Update everything on screen
     pygame.display.flip()
@@ -108,6 +98,6 @@ while running:
     counter += 1
 
     # limits FPS to 60
-    dt = clock.tick(60) / 1000
+    delta_time = clock.tick(60) / 1000
 
 pygame.quit()

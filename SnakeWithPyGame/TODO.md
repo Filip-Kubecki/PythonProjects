@@ -2,13 +2,10 @@ TODO:
 - add sounds to game:
   - background music,
   - sounds on actions: game over, apple eaten etc
-- add Board class:
-  - it will contain all objects that are actively on board in the moment and contain all methods specific to game itself,
 - add obstacles to board
 - add margin around game surface and add there UI elements: counter, timer, etc
-- add textures to the game: snake, apple, obstacles:
-  - add texture for Snake bending it's segment - apply in code
+- add textures to the game: obstacles:
 - improve pause and game over screens
 
 Bugs:
-- NONE
+- when Snake HEAD texture collide into Snake SEGMENT, textures overlap. Make it so the game over screen appear before overlap

@@ -1,5 +1,5 @@
 import pygame
-import os
+import Textures_src
 from tools import Direction
 from tools import Snake_texture_state
 
@@ -75,8 +75,6 @@ class Snake():
         self.update_direction()
 
     def update_direction(self):
-        prev_direction = self.segments[0].direction
-
         # Rotating HEAD texture without changing directino - direction set to current direction
         self.segments[0].change_direction(self.segments[0].direction)
 
@@ -94,8 +92,6 @@ class Snake():
 
                 # Change current segment direction to direction of previouse segment direction
                 self.segments[i].change_direction(self.segments[i-1].direction)
-
-                prev_direction = self.segments[i].direction
 
     def add_segment(self):
         tail = self.segments[-1]
@@ -138,8 +134,7 @@ class Segment():
     def __init__(self, x, y):
         self.direction = Direction.NONE
         self.rect = pygame.rect.Rect(x, y, 20, 20)
-        self.img = pygame.image.load(os.path.join(
-            "SnakeWithPyGame/img", "snake_tail.png"))
+        self.img = pygame.image.load(Textures_src.SNAKE_TAIL)
         self.angle = 0.0
         self.texture_state = Snake_texture_state.TAIL
 
@@ -148,11 +143,14 @@ class Segment():
 
     def change_direction(self, new_direction):
         self.direction = new_direction
+
         # Resets angle of the texture 0 degree
         self.img = pygame.transform.rotate(self.img, 360.0 - self.angle)
         self.change_texture()
 
-        if self.texture_state is Snake_texture_state.TAIL or self.texture_state is Snake_texture_state.HEAD or self.texture_state is Snake_texture_state.SEGMENT:
+        if (self.texture_state is Snake_texture_state.TAIL or
+            self.texture_state is Snake_texture_state.HEAD or
+                self.texture_state is Snake_texture_state.SEGMENT):
             self.rotate_texture()
 
     def rotate_texture(self):
@@ -198,29 +196,22 @@ class Segment():
         # Change texture based on Snake_texture_state - head, tail, segment etc
         match self.texture_state:
             case Snake_texture_state.HEAD:
-                self.img = pygame.image.load(
-                    "SnakeWithPyGame/img/snake_head.png")
+                self.img = pygame.image.load(Textures_src.SNAKE_HEAD)
             case Snake_texture_state.TAIL:
-                self.img = pygame.image.load(
-                    "SnakeWithPyGame/img/snake_tail.png")
+                self.img = pygame.image.load(Textures_src.SNAKE_TAIL)
             case Snake_texture_state.SEGMENT:
-                self.img = pygame.image.load(
-                    "SnakeWithPyGame/img/snake_straight.png")
+                self.img = pygame.image.load(Textures_src.SNAKE_SEGMENT)
             case Snake_texture_state.DOWN_RIGHT:
-                self.img = pygame.image.load(
-                    "SnakeWithPyGame/img/snake_bend_bottom_to_left.png")
+                self.img = pygame.image.load(Textures_src.SNAKE_BEND)
                 self.img = pygame.transform.rotate(self.img, 180.0)
                 self.angle = 180.0
             case Snake_texture_state.DOWN_LEFT:
-                self.img = pygame.image.load(
-                    "SnakeWithPyGame/img/snake_bend_bottom_to_left.png")
+                self.img = pygame.image.load(Textures_src.SNAKE_BEND)
                 self.img = pygame.transform.rotate(self.img, 270.0)
                 self.angle = 270.0
             case Snake_texture_state.UP_RIGHT:
-                self.img = pygame.image.load(
-                    "SnakeWithPyGame/img/snake_bend_bottom_to_left.png")
+                self.img = pygame.image.load(Textures_src.SNAKE_BEND)
                 self.img = pygame.transform.rotate(self.img, 90.0)
                 self.angle = 90.0
             case Snake_texture_state.UP_LEFT:
-                self.img = pygame.image.load(
-                    "SnakeWithPyGame/img/snake_bend_bottom_to_left.png")
+                self.img = pygame.image.load(Textures_src.SNAKE_BEND)

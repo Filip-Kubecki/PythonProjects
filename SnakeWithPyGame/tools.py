@@ -17,6 +17,12 @@ def tileBackground(screen: pygame.display, image: pygame.Surface):
             screen.blit(image, (x * imageWidth, y * imageHeight))
 
 
+def two_surfaces_centering_offset(outer_surface, inner_surface):
+    x_offset = (outer_surface.get_width()//2)-(inner_surface.get_width()//2)
+    y_offset = (outer_surface.get_height()//2)-(inner_surface.get_height()//2)
+    return (x_offset, y_offset)
+
+
 class Direction(Enum):
     NONE = 0
     RIGHT = 1

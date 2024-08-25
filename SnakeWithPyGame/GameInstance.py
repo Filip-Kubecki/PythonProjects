@@ -1,10 +1,11 @@
-import pygame import tools
+import pygame
+import tools
 import Textures_src
 from Snake import Snake
 from Apple import Apple
 
 
-class Board(pygame.Surface):
+class GameInstance(pygame.Surface):
     def __init__(self):
         self.elements = list()
 
