@@ -48,8 +48,6 @@ class Snake():
     def update(self, screen):
         self.current_direction = self.segments[0].direction
 
-        self.self_collision()
-
         for segment in self.segments:
             match segment.direction:
                 case Direction.UP:
@@ -72,6 +70,7 @@ class Snake():
                         segment.rect.x = 0
                     else:
                         segment.rect.x += 20
+
         self.update_direction()
 
     def update_direction(self):

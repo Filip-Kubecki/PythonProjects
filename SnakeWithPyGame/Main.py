@@ -1,5 +1,7 @@
 import pygame
 import tools
+import pygame.freetype
+import Textures_src
 from GameInstance import GameInstance
 from PausedGameScreen import PausedGameScreen
 from GameOverScreen import GameOverScreen
@@ -20,17 +22,25 @@ board = GameInstance()
 # Pause screen
 pause_screen = PausedGameScreen(SCREEN_WIDTH, SCREEN_HEIGHT)
 
-# Pause screen
+# Game Over screen
 game_over_screen = GameOverScreen(SCREEN_WIDTH, SCREEN_HEIGHT)
 
 # Game variables
 delta_time = 0  # time in seconds since last frame - used for limiting framerate
 counter = 0
+
 game_started = False
 pause_game = False
 game_over = False
 gameTick = 10
 
+score = 0
+
+# UI elements
+apple_icon = pygame.image.load(Textures_src.APPLE)
+apple_icon = pygame.transform.scale_by(apple_icon, 1.6)
+
+ui_font = pygame.freetype.SysFont('JetBrainsMono NFM, thin', 28)
 
 # Main loop of game -----------------------------------------------------------
 while running:
@@ -43,11 +53,35 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
+    # Self collision - game over
+    if board.snake_collision_game_over():
+        game_over = True
+
     # Main surface background
-    screen.fill("grey")
+    screen.fill((120, 156, 53))
+    pygame.draw.rect(
+        screen,
+        (79, 97, 42),   # Color of the border
+        pygame.Rect(20, 70, 810, 610),
+        7,              # Border width
+        7               # Border radius
+    )
+
+    # Display UI elements
+    screen.blit(apple_icon, (35, 20))
+    ui_font.render_to(
+        screen,
+        (75, 28),
+        score.__str__(),
+        (230, 250, 210)
+    )
 
     # Run one board cycle
     board.run_game_cycle()
+
+    # Check if snake ate apple - increase score
+    if board.apple_eaten():
+        score += 100
 
     # Taking keyboard input
     keys = pygame.key.get_pressed()
@@ -76,13 +110,12 @@ while running:
     # Display game instance surface
     screen.blit(board.screen, (25, 75))
 
-    # Self collision - game over
-    if board.snake_collision_game_over():
+    # Display GameOver screen
+    if game_over:
         screen.blit(
             game_over_screen,
             tools.two_surfaces_centering_offset(screen, game_over_screen))
         game_over_screen.display(screen)
-        game_over = True
 
     # display pause screen
     if pause_game and not game_over:

@@ -37,11 +37,6 @@ class GameInstance(pygame.Surface):
         # Draw snake object
         self.snake.draw_snake(self.screen)
 
-        # Checking if Snake eats Apple
-        if self.apple.rect.colliderect(self.snake.segments[0].rect):
-            self.snake.add_segment()
-            self.apple.set_random_position(self.screen)
-
         keys = pygame.key.get_pressed()
 
         self.snake.key_event(keys)
@@ -53,3 +48,11 @@ class GameInstance(pygame.Surface):
 
     def snake_update(self):
         self.snake.update(self.screen)
+
+    def apple_eaten(self):
+        # Checking if Snake eats Apple
+        if self.apple.rect.colliderect(self.snake.segments[0].rect):
+            self.snake.add_segment()
+            self.apple.set_random_position(self.screen)
+            return True
+        return False

@@ -23,6 +23,10 @@ def two_surfaces_centering_offset(outer_surface, inner_surface):
     return (x_offset, y_offset)
 
 
+def two_values_centering_offset(outer_value, inner_value):
+    return ((outer_value // 2) - (inner_value // 2))
+
+
 class Direction(Enum):
     NONE = 0
     RIGHT = 1
