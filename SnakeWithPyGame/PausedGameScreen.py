@@ -2,6 +2,8 @@ import pygame
 import pygame.freetype
 import Textures_src
 import Style
+import config
+from Button import Button
 
 
 class PausedGameScreen(pygame.Surface):
@@ -10,22 +12,30 @@ class PausedGameScreen(pygame.Surface):
         self.title_font = pygame.freetype.SysFont('JetBrainsMono NT', 60)
         self.font = pygame.freetype.SysFont('JetBrainsMono NFP', 32)
 
+        # Setting up transparent background
+        self.convert_alpha()
+        self.fill((20, 20, 20))
+        self.set_alpha(0)
+
         # Title
-        self.title = "Paused"
-        self.text_rect = self.title_font.get_rect(self.title)
+        self.title = "Pause"
 
         # Menu buttno background
         self.menu_background = pygame.Rect(225, 300, 400, 100)
 
         # Menu buttons
-        self.exit_icon = pygame.image.load(Textures_src.UI_EXIT_ICON)
-        self.exit_icon = pygame.transform.scale_by(self.exit_icon, 0.1)
-        self.option_icon = pygame.image.load(Textures_src.UI_OPTION_ICON)
-        self.option_icon = pygame.transform.scale_by(self.option_icon, 0.1)
-        self.restart_icon = pygame.image.load(Textures_src.UI_RESTART_ICON)
-        self.restart_icon = pygame.transform.scale_by(self.restart_icon, 0.1)
+        self.exit_icon = Button(55, 55, (525, 325), Textures_src.UI_EXIT_ICON)
+        self.option_icon = Button(
+            55, 55, (400, 325), Textures_src.UI_OPTION_ICON)
+        self.restart_icon = Button(
+            55, 55, (275, 325), Textures_src.UI_RESTART_ICON)
 
-        self.convert_alpha()
+        self.buttons = list()
+        self.buttons.append(self.restart_icon)
+        self.buttons.append(self.option_icon)
+        self.buttons.append(self.exit_icon)
+
+        self.in_focus = None
 
     def display(self, screen):
         self.title_font.render_to(
@@ -43,6 +53,40 @@ class PausedGameScreen(pygame.Surface):
             border_radius=25
         )
 
-        screen.blit(self.restart_icon, (275, 325))
-        screen.blit(self.option_icon, (400, 325))
-        screen.blit(self.exit_icon, (525, 325))
+        self.exit_icon.display(screen)
+        self.option_icon.display(screen)
+        self.restart_icon.display(screen)
+
+        self.exit_icon.hover()
+        self.option_icon.hover()
+        self.restart_icon.hover()
+
+        for button in self.buttons:
+            button.set_alpha(255)
+
+        if self.in_focus is not None:
+            self.buttons[self.in_focus].set_alpha(
+                config.DIMMED_BACKGROUND_MAX_ALPHA)
+
+    def next_focused(self):
+        if self.in_focus is None:
+            self.in_focus = 0
+        elif self.in_focus < len(self.buttons)-1:
+            self.in_focus += 1
+        else:
+            self.in_focus = 0
+
+    def none_focused(self):
+        self.in_focus = None
+
+    def dim_background(self):
+        if self.get_alpha() is None:
+            raise Exception("No alpha value exeption")
+        else:
+            if self.get_alpha() < config.DIMMED_BACKGROUND_MAX_ALPHA:
+                self.set_alpha(
+                    self.get_alpha() + config.DIMMED_BACKGROUND_ALPHA_INCREMENT
+                )
+
+    def hide_background(self):
+        self.set_alpha(0)

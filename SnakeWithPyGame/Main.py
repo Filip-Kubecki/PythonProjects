@@ -3,10 +3,10 @@ import Style
 import tools
 import pygame.freetype
 import Textures_src
+import time
 from GameInstance import GameInstance
 from PausedGameScreen import PausedGameScreen
 from GameOverScreen import GameOverScreen
-from Button import Button
 
 SCREEN_WIDTH = 850
 SCREEN_HEIGHT = 700
@@ -23,7 +23,6 @@ board = GameInstance()
 
 # Pause screen
 pause_screen = PausedGameScreen(SCREEN_WIDTH, SCREEN_HEIGHT)
-pause_oppacity = 0
 
 # Game Over screen
 game_over_screen = GameOverScreen(SCREEN_WIDTH, SCREEN_HEIGHT)
@@ -39,23 +38,31 @@ game_tick = 10
 
 score = 0
 
+time_start = time.time()
+
 # UI elements
 apple_icon = pygame.image.load(Textures_src.APPLE)
 apple_icon = pygame.transform.scale_by(apple_icon, 1.6)
 
 ui_font = pygame.freetype.SysFont('JetBrainsMono NFM, thin', 28)
-random_button = Button(40, 40, Textures_src.BACKGROUND_GAME_TILE)
 
 # Main loop of game -----------------------------------------------------------
 while running:
     # pygame.QUIT event means the user clicked X to close window
+
     for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
                 counter = 0
                 pause_game = not pause_game
-        if event.type == pygame.QUIT:
-            running = False
+
+            if pause_game and event.key == pygame.K_TAB:
+                pause_screen.next_focused()
+
+            if game_over and event.key == pygame.K_TAB:
+                game_over_screen.focus()
 
     # Self collision - game over
     if board.snake_collision_game_over():
@@ -79,8 +86,6 @@ while running:
         score.__str__(),
         Style.CREAMY_WHITE
     )
-    random_button.display(screen)
-    random_button.mouse_click(tools.shit)
 
     # Run one board cycle
     board.run_game_cycle()
@@ -112,24 +117,59 @@ while running:
 
     # Display GameOver screen
     if game_over:
+        game_over_screen.dim_background()
         screen.blit(
             game_over_screen,
             tools.two_surfaces_centering_offset(screen, game_over_screen))
         game_over_screen.display(screen)
 
+        if game_over_screen.restart_icon.mouse_click():
+            board = GameInstance()
+            score = 0
+            game_started = False
+            game_over = False
+
+        if keys[pygame.K_RETURN] or keys[pygame.K_SPACE]:
+            if game_over_screen.in_focus is not None:
+                board = GameInstance()
+                score = 0
+                game_started = False
+                game_over = False
+    else:
+        game_over_screen.hide_background()
+        game_over_screen.unfocus()
+
     # display pause screen
     if pause_game and not game_over:
-        if pause_oppacity < 150:
-            pause_oppacity += 15
-
-        pause_screen.fill((20, 20, 20, pause_oppacity))
+        pause_screen.dim_background()
         screen.blit(
             pause_screen,
             tools.two_surfaces_centering_offset(screen, pause_screen)
         )
         pause_screen.display(screen)
+
+        if pause_screen.exit_icon.mouse_click():
+            running = False
+        elif pause_screen.restart_icon.mouse_click():
+            board = GameInstance()
+            score = 0
+            game_started = False
+            pause_game = False
+
+        if keys[pygame.K_RETURN] or keys[pygame.K_SPACE]:
+            match pause_screen.in_focus:
+                case 2:
+                    running = False
+                case 1:
+                    print("TODO: THIS THING")
+                case 0:
+                    board = GameInstance()
+                    score = 0
+                    game_started = False
+                    pause_game = False
     else:
-        pause_oppacity = 0
+        pause_screen.hide_background()
+        pause_screen.none_focused()
 
     # Update everything on screen
     pygame.display.flip()
@@ -137,7 +177,7 @@ while running:
     # Update in game timmer
     counter += 1
 
-    # limits FPS to 60
-    delta_time = clock.tick(60) / 1000
+    # limits FPS to 120
+    delta_time = clock.tick(120) / 1000
 
 pygame.quit()
