@@ -1,6 +1,7 @@
 from enum import Enum
 import pygame
 import math
+import config as conf
 
 
 def tileBackground(screen: pygame.display, image: pygame.Surface):
@@ -64,8 +65,18 @@ def mouse_button_down():
     return False
 
 
-def shit():
-    print("SHIT")
+def index_to_position(index):
+    return (
+        (index % (conf.GAME_INSTANCE_WIDTH//conf.TILE_LEN)) *
+        conf.TILE_LEN,  # x position
+        (index // (conf.GAME_INSTANCE_WIDTH//conf.TILE_LEN)) *
+        conf.TILE_LEN  # y position
+    )
+
+
+def position_to_index(position):
+    return ((position[0]//conf.TILE_LEN) +
+            ((position[1]//conf.TILE_LEN)*(conf.GAME_INSTANCE_WIDTH//conf.TILE_LEN)))
 
 
 class Direction(Enum):
@@ -84,3 +95,4 @@ class Snake_texture_state(Enum):
     UP_RIGHT = 5
     DOWN_LEFT = 6
     DOWN_RIGHT = 7
+    COLLIDED = 8

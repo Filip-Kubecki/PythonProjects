@@ -10,7 +10,7 @@ class Snake():
         self.segments = list()
         self.current_direction = Direction.NONE
 
-        next_segment_y = 20
+        next_segment_y = config.TILE_LEN
 
         # Setting up head
         self.segments.append(Segment(x, y))
@@ -20,7 +20,7 @@ class Snake():
         # Setting up initial segments - right now one
         for i in range(config.SNAKE_SEGMENT_NUMBER - 2):
             new_segment = Segment(x, y+next_segment_y)
-            next_segment_y += 20
+            next_segment_y += config.TILE_LEN
             new_segment.direction = Direction.UP
             new_segment.texture_state = Snake_texture_state.SEGMENT
             new_segment.change_texture()
@@ -31,12 +31,20 @@ class Snake():
         tail.direction = Direction.UP
         self.segments.append(tail)
 
-    def self_collision(self):
+    def self_collision(self, screen):
         head = self.segments[0]
         for segment in self.segments[1:]:
             if head.rect.colliderect(segment.rect):
+                self.decapitate(screen)
                 return True
         return False
+
+    def decapitate(self, screen):
+        self.segments.pop(0)
+        self.segments[0].texture_state = Snake_texture_state.COLLIDED
+        self.segments[0].change_texture()
+        self.segments[0].rotate_texture()
+        self.segments[0].draw_segment(screen)
 
     def change_direction(self, new_direction):
         # Protecting user from turning snake head in the direction of its body
@@ -57,24 +65,24 @@ class Snake():
             match segment.direction:
                 case Direction.UP:
                     if segment.rect.y <= 0:
-                        segment.rect.y = screen.get_height()-20
+                        segment.rect.y = screen.get_height()-config.TILE_LEN
                     else:
-                        segment.rect.y -= 20
+                        segment.rect.y -= config.TILE_LEN
                 case Direction.DOWN:
-                    if segment.rect.y >= screen.get_height()-20:
+                    if segment.rect.y >= screen.get_height()-config.TILE_LEN:
                         segment.rect.y = 0
                     else:
-                        segment.rect.y += 20
+                        segment.rect.y += config.TILE_LEN
                 case Direction.LEFT:
                     if segment.rect.x <= 0:
-                        segment.rect.x = screen.get_width()-20
+                        segment.rect.x = screen.get_width()-config.TILE_LEN
                     else:
-                        segment.rect.x -= 20
+                        segment.rect.x -= config.TILE_LEN
                 case Direction.RIGHT:
-                    if segment.rect.x >= screen.get_width()-20:
+                    if segment.rect.x >= screen.get_width()-config.TILE_LEN:
                         segment.rect.x = 0
                     else:
-                        segment.rect.x += 20
+                        segment.rect.x += config.TILE_LEN
 
         self.update_direction()
 
@@ -104,13 +112,13 @@ class Snake():
 
         match tail.direction:
             case Direction.UP:
-                new_segment.rect.y += 20
+                new_segment.rect.y += config.TILE_LEN
             case Direction.DOWN:
-                new_segment.rect.y -= 20
+                new_segment.rect.y -= config.TILE_LEN
             case Direction.LEFT:
-                new_segment.rect.x += 20
+                new_segment.rect.x += config.TILE_LEN
             case Direction.RIGHT:
-                new_segment.rect.x -= 20
+                new_segment.rect.x -= config.TILE_LEN
 
         new_segment.texture_state = Snake_texture_state.TAIL
         new_segment.direction = tail.direction
@@ -137,7 +145,7 @@ class Snake():
 class Segment():
     def __init__(self, x, y):
         self.direction = Direction.NONE
-        self.rect = pygame.rect.Rect(x, y, 20, 20)
+        self.rect = pygame.rect.Rect(x, y, config.TILE_LEN, config.TILE_LEN)
         self.img = pygame.image.load(Textures_src.SNAKE_TAIL)
         self.angle = 0.0
         self.texture_state = Snake_texture_state.TAIL
@@ -154,6 +162,7 @@ class Segment():
 
         if (self.texture_state is Snake_texture_state.TAIL or
             self.texture_state is Snake_texture_state.HEAD or
+            self.texture_state is Snake_texture_state.COLLIDED or
                 self.texture_state is Snake_texture_state.SEGMENT):
             self.rotate_texture()
 
@@ -219,3 +228,5 @@ class Segment():
                 self.angle = 90.0
             case Snake_texture_state.UP_LEFT:
                 self.img = pygame.image.load(Textures_src.SNAKE_BEND)
+            case Snake_texture_state.COLLIDED:
+                self.img = pygame.image.load(Textures_src.SNAKE_COLLIDED)

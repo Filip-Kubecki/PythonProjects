@@ -1,6 +1,7 @@
 import pygame
 import tools
 import Textures_src
+import config
 from Snake import Snake
 from Apple import Apple
 
@@ -9,17 +10,26 @@ class GameInstance(pygame.Surface):
     def __init__(self):
         self.elements = list()
 
+        # List containing free spaces
+        self.free_fields = list()
+        for i in range((config.GAME_INSTANCE_WIDTH//20)*(config.GAME_INSTANCE_HEIGHT//20)):
+            self.free_fields.append(i)
+
         self.score = 0
-        self.keys = pygame.event
-        self.screen = pygame.surface.Surface((800, 600))
+        self.screen = pygame.surface.Surface(
+            (config.GAME_INSTANCE_WIDTH,
+             config.GAME_INSTANCE_HEIGHT)
+        )
 
         # Backgroung setup
-        self.bgTile = pygame.image.load(Textures_src.BACKGROUND_GAME_TILE)
-        tools.tileBackground(self.screen, self.bgTile)
+        self._bgTile = pygame.image.load(Textures_src.BACKGROUND_GAME_TILE)
+        tools.tileBackground(self.screen, self._bgTile)
 
         # Snake object setup
-        self.snake = Snake(self.screen.get_width() // 2,
-                           (self.screen.get_height() // 2))
+        self.snake = Snake(
+            self.screen.get_width() // 2,
+            self.screen.get_height() // 2
+        )
         self.elements.append(self.snake)
 
         # Apple object setup
@@ -29,7 +39,7 @@ class GameInstance(pygame.Surface):
 
     def run_game_cycle(self):
         # fill the screen with a color to wipe away anything from last frame
-        tools.tileBackground(self.screen, self.bgTile)
+        tools.tileBackground(self.screen, self._bgTile)
 
         # Draw apple object
         self.apple.draw_apple(self.screen)
@@ -42,7 +52,7 @@ class GameInstance(pygame.Surface):
         self.snake.key_event(keys)
 
     def snake_collision_game_over(self):
-        if self.snake.self_collision():
+        if self.snake.self_collision(self.screen):
             return True
         return False
 

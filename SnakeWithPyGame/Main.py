@@ -3,29 +3,27 @@ import Style
 import tools
 import pygame.freetype
 import Textures_src
-import time
+import config
 from GameInstance import GameInstance
 from PausedGameScreen import PausedGameScreen
 from GameOverScreen import GameOverScreen
 
-SCREEN_WIDTH = 850
-SCREEN_HEIGHT = 700
 
 # Pygame setup
 pygame.init()
 pygame.display.set_caption("Snake")
 clock = pygame.time.Clock()
-screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+screen = pygame.display.set_mode((config.WINDOW_WIDTH, config.WINDOW_HEIGHT))
 running = True
 
 # Create Board object
 board = GameInstance()
 
 # Pause screen
-pause_screen = PausedGameScreen(SCREEN_WIDTH, SCREEN_HEIGHT)
+pause_screen = PausedGameScreen(config.WINDOW_WIDTH, config.WINDOW_HEIGHT)
 
 # Game Over screen
-game_over_screen = GameOverScreen(SCREEN_WIDTH, SCREEN_HEIGHT)
+game_over_screen = GameOverScreen(config.WINDOW_WIDTH, config.WINDOW_HEIGHT)
 
 # Game variables
 delta_time = 0  # time in seconds since last frame - used for limiting FPS
@@ -37,8 +35,6 @@ game_over = False
 game_tick = 10
 
 score = 0
-
-time_start = time.time()
 
 # UI elements
 apple_icon = pygame.image.load(Textures_src.APPLE)
