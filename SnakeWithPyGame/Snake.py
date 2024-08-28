@@ -1,6 +1,7 @@
 import pygame
 import Textures_src
 import config
+import tools
 from tools import Direction
 from tools import Snake_texture_state
 
@@ -105,7 +106,7 @@ class Snake():
                 # Change current segment direction to direction of previouse segment direction
                 self.segments[i].change_direction(self.segments[i-1].direction)
 
-    def add_segment(self):
+    def add_segment(self, screen):
         tail = self.segments[-1]
 
         new_segment = Segment(tail.rect.x, tail.rect.y)
@@ -140,6 +141,13 @@ class Snake():
             self.change_direction(Direction.LEFT)
         elif key_event[pygame.K_d]:
             self.change_direction(Direction.RIGHT)
+
+    def get_position_indexes(self):
+        indexes = list()
+        for segment in self.segments:
+            position = (segment.rect.x, segment.rect.y)
+            indexes.append(tools.position_to_index(position))
+        return indexes
 
 
 class Segment():

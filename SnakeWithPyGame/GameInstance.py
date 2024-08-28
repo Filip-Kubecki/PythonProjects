@@ -4,22 +4,23 @@ import Textures_src
 import config
 from Snake import Snake
 from Apple import Apple
+from random import randrange
 
 
 class GameInstance(pygame.Surface):
     def __init__(self):
-        self.elements = list()
-
-        # List containing free spaces
-        self.free_fields = list()
-        for i in range((config.GAME_INSTANCE_WIDTH//20)*(config.GAME_INSTANCE_HEIGHT//20)):
-            self.free_fields.append(i)
+        print("Game instance initialization ---------------")
+        self.obstacles = list()
 
         self.score = 0
         self.screen = pygame.surface.Surface(
-            (config.GAME_INSTANCE_WIDTH,
-             config.GAME_INSTANCE_HEIGHT)
+            (config.GAME_INSTANCE_WIDTH, config.GAME_INSTANCE_HEIGHT)
         )
+
+        # Initializing list with all possible positions on board
+        self._position_indexes = list()
+        for i in range((config.GAME_INSTANCE_WIDTH//config.TILE_LEN)*(config.GAME_INSTANCE_HEIGHT//config.TILE_LEN)):
+            self._position_indexes.append(i)
 
         # Backgroung setup
         self._bgTile = pygame.image.load(Textures_src.BACKGROUND_GAME_TILE)
@@ -27,15 +28,15 @@ class GameInstance(pygame.Surface):
 
         # Snake object setup
         self.snake = Snake(
-            self.screen.get_width() // 2,
-            self.screen.get_height() // 2
+            (config.GAME_INSTANCE_WIDTH // 2) -
+            ((config.GAME_INSTANCE_WIDTH // 2) % 20),
+            (config.GAME_INSTANCE_HEIGHT // 2) -
+            ((config.GAME_INSTANCE_HEIGHT // 2) % 20)
         )
-        self.elements.append(self.snake)
 
         # Apple object setup
         self.apple = Apple()
-        self.apple.set_random_position(self.screen)
-        self.elements.append(self.apple)
+        self.place_apple()
 
     def run_game_cycle(self):
         # fill the screen with a color to wipe away anything from last frame
@@ -62,7 +63,19 @@ class GameInstance(pygame.Surface):
     def apple_eaten(self):
         # Checking if Snake eats Apple
         if self.apple.rect.colliderect(self.snake.segments[0].rect):
-            self.snake.add_segment()
-            self.apple.set_random_position(self.screen)
+            self.snake.add_segment(self)
+            self.place_apple()
             return True
         return False
+
+    def place_apple(self):
+        free_indexes = self._position_indexes.copy()
+
+        snake_indexes = self.snake.get_position_indexes()
+
+        for i in (range(len(snake_indexes)-1)):
+            free_indexes.remove(snake_indexes[i])
+
+        random_index = tools.index_to_position(
+            free_indexes[randrange(0, len(free_indexes))])
+        self.apple.set_position(random_index)

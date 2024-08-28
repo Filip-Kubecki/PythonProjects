@@ -3,27 +3,26 @@ import Style
 import tools
 import pygame.freetype
 import Textures_src
-import config
+from config import *
 from GameInstance import GameInstance
 from PausedGameScreen import PausedGameScreen
 from GameOverScreen import GameOverScreen
-
 
 # Pygame setup
 pygame.init()
 pygame.display.set_caption("Snake")
 clock = pygame.time.Clock()
-screen = pygame.display.set_mode((config.WINDOW_WIDTH, config.WINDOW_HEIGHT))
+screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 running = True
 
 # Create Board object
 board = GameInstance()
 
 # Pause screen
-pause_screen = PausedGameScreen(config.WINDOW_WIDTH, config.WINDOW_HEIGHT)
+pause_screen = PausedGameScreen(WINDOW_WIDTH, WINDOW_HEIGHT)
 
 # Game Over screen
-game_over_screen = GameOverScreen(config.WINDOW_WIDTH, config.WINDOW_HEIGHT)
+game_over_screen = GameOverScreen(WINDOW_WIDTH, WINDOW_HEIGHT)
 
 # Game variables
 delta_time = 0  # time in seconds since last frame - used for limiting FPS
@@ -32,8 +31,7 @@ counter = 0
 game_started = False
 pause_game = False
 game_over = False
-game_tick = 10
-
+game_tick = SNAKE_START_SPEED
 score = 0
 
 # UI elements
@@ -69,8 +67,14 @@ while running:
     pygame.draw.rect(  # Border around board
         screen,
         Style.DARK_BROWN,   # Color of the border
-        pygame.Rect(20, 70, 810, 610),
-        7,              # Border width
+        pygame.Rect(
+            (WINDOW_WIDTH-(GAME_INSTANCE_WIDTH + \
+             (GAME_INSTANCE_BORDER*2)))//2,   # X position
+            GAME_INSTANCE_TOP_MARGIN-GAME_INSTANCE_BORDER,      # Y position
+            GAME_INSTANCE_WIDTH + (GAME_INSTANCE_BORDER*2),   # Width
+            GAME_INSTANCE_HEIGHT + (GAME_INSTANCE_BORDER*2)   # Height
+        ),
+        GAME_INSTANCE_BORDER,              # Border width
         7               # Border radius
     )
 
@@ -88,7 +92,7 @@ while running:
 
     # Check if snake ate apple - increase score
     if board.apple_eaten():
-        score += 10
+        score += 1
 
     # Taking keyboard input
     keys = pygame.key.get_pressed()
@@ -109,7 +113,13 @@ while running:
             board.snake_update()
 
     # Display game instance surface
-    screen.blit(board.screen, (25, 75))
+    screen.blit(
+        board.screen,
+        (   # Position
+            tools.two_surfaces_centering_offset(screen, board.screen)[0],
+            GAME_INSTANCE_TOP_MARGIN
+        )
+    )
 
     # Display GameOver screen
     if game_over:

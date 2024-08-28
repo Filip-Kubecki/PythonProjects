@@ -1,7 +1,7 @@
 from enum import Enum
 import pygame
 import math
-import config as conf
+from config import *
 
 
 def tileBackground(screen: pygame.display, image: pygame.Surface):
@@ -33,7 +33,7 @@ def game_pace(keys, game_tick):
     if keys[pygame.K_1]:
         game_tick = 60
     elif keys[pygame.K_2]:
-        game_tick = 10
+        game_tick = SNAKE_START_SPEED
     elif keys[pygame.K_3]:
         game_tick = 5
     elif keys[pygame.K_EQUALS]:
@@ -67,16 +67,16 @@ def mouse_button_down():
 
 def index_to_position(index):
     return (
-        (index % (conf.GAME_INSTANCE_WIDTH//conf.TILE_LEN)) *
-        conf.TILE_LEN,  # x position
-        (index // (conf.GAME_INSTANCE_WIDTH//conf.TILE_LEN)) *
-        conf.TILE_LEN  # y position
+        (index % (GAME_INSTANCE_WIDTH//TILE_LEN)) *
+        TILE_LEN,  # x position
+        (index // (GAME_INSTANCE_WIDTH//TILE_LEN)) *
+        TILE_LEN  # y position
     )
 
 
 def position_to_index(position):
-    return ((position[0]//conf.TILE_LEN) +
-            ((position[1]//conf.TILE_LEN)*(conf.GAME_INSTANCE_WIDTH//conf.TILE_LEN)))
+    return ((position[0]//TILE_LEN) +
+            ((position[1]//TILE_LEN)*(GAME_INSTANCE_WIDTH//TILE_LEN)))
 
 
 class Direction(Enum):
