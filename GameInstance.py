@@ -12,7 +12,6 @@ class GameInstance(pygame.Surface):
         print("Game instance initialization ---------------")
         self.obstacles = list()
 
-        self.score = 0
         self.screen = pygame.surface.Surface(
             (config.GAME_INSTANCE_WIDTH, config.GAME_INSTANCE_HEIGHT)
         )
@@ -77,5 +76,6 @@ class GameInstance(pygame.Surface):
             free_indexes.remove(snake_indexes[i])
 
         random_index = tools.index_to_position(
-            free_indexes[randrange(0, len(free_indexes))])
+            free_indexes[randrange(0, len(free_indexes))]
+        )
         self.apple.set_position(random_index)

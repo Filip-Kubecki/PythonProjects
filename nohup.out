@@ -1,0 +1,120 @@
+CompileCommand: exclude com/intellij/openapi/vfs/impl/FilePartNodeRoot.trieDescend bool exclude = true
+WARN: Resource bundle redefinition for plugin R4Intellij. Old value: messages.RPluginBundle, new value: messages.RPluginRemoteBundle
+2024-08-01 20:09:12,285 [   1228]   WARN - #c.i.i.u.UITheme - SplitPane.highlight=#50535B  has # prefix but cannot be parsed as color
+2024-08-01 20:09:12,493 [   1436]   WARN - #c.i.i.u.UITheme - *.arc has numeric value but specified as string
+2024-08-01 20:09:12,497 [   1440]   WARN - #c.i.i.u.UITheme - SplitPane.highlight=#50535B  has # prefix but cannot be parsed as color
+2024-08-01 20:09:12,883 [   1826]   WARN - #c.i.s.ComponentManagerImpl - com.intellij.platform.ide.menu.GlobalMenuLinux <clinit> requests com.intellij.openapi.application.Experiments instance. Class initialization must not depend on services. Consider using instance of the service on-demand instead.
+2024-08-01 20:09:13,557 [   2500]   WARN - #c.i.e.t.TargetBasedSdks - SDK target configuration data is absent
+2024-08-01 20:09:13,797 [   2740]   WARN - #c.i.s.ComponentManagerImpl - org.jetbrains.kotlin.idea.gradleJava.scripting.roots.GradleBuildRootDataSerializer <clinit> requests com.intellij.util.gist.storage.GistStorage instance. Class initialization must not depend on services. Consider using instance of the service on-demand instead.
+2024-08-01 20:09:14,387 [   3330]   WARN - #c.i.e.RunManager - Must be not called before project components initialized
+2024-08-01 20:09:14,389 [   3332]   WARN - #c.i.e.RunManager - Must be not called before project components initialized
+2024-08-01 20:09:14,390 [   3333]   WARN - #c.i.e.RunManager - Must be not called before project components initialized
+2024-08-01 20:09:15,748 [   4691]   WARN - #c.i.u.x.Binding - No accessors for com.intellij.openapi.roots.libraries.DummyLibraryProperties. This means that state class cannot be serialized properly. Please see https://jb.gg/ij-psoc
+SLF4J(E): A service provider failed to instantiate:
+org.slf4j.spi.SLF4JServiceProvider: org.slf4j.jul.JULServiceProvider not a subtype
+[DefaultDispatcher-worker-115] INFO org.freedesktop.dbus.connections.transports.TransportBuilder - Using transport dbus-java-transport-native-unixsocket for address unix:path=/run/user/1000/bus
+2024-08-01 20:09:19,610 [   8553]   WARN - #c.i.o.v.n.p.PersistentFSImpl - file[405369, flags: 4]: top parent (id: 356321, name: 'kotlin-stdlib-1.9.10.jar', flags: 775 parent: 0), is still not in the idToDirCache. path: [358467, 356321] [/kotlin-stdlib-1.9.10.jar/META-INF], cachedRoots.size(=200), roots.size(=200), pfs.roots.contains(356321)=false, fs.roots.contains(356321)=true, non-cached roots: 0, cached non-roots: 0, FS roots not PFS roots: 912: 
+
+2024-08-01 20:10:11,619 [  60562]   WARN - #c.i.u.x.Binding - No accessors for com.intellij.platform.feedback.impl.state.DontShowAgainFeedbackState. This means that state class cannot be serialized properly. Please see https://jb.gg/ij-psoc
+2024-08-01 20:10:11,619 [  60562]   WARN - #c.i.u.x.Binding - No accessors for com.intellij.platform.feedback.impl.state.CommonFeedbackSurveysState. This means that state class cannot be serialized properly. Please see https://jb.gg/ij-psoc
+2024-08-01 20:40:40,624 [1889567]   WARN - #c.i.u.x.Binding - No accessors for org.jetbrains.kotlin.cli.common.arguments.InternalArgument. This means that state class cannot be serialized properly. Please see https://jb.gg/ij-psoc
+2024-08-01 20:40:40,675 [1889618]   WARN - #c.i.u.x.Binding - No accessors for org.jetbrains.kotlin.idea.projectConfiguration.KotlinNotConfiguredSuppressedModulesState. This means that state class cannot be serialized properly. Please see https://jb.gg/ij-psoc
+2024-08-01 20:40:40,870 [1889813]   WARN - #c.i.u.x.Binding - No accessors for nl.hannahsten.texifyidea.lang.commands.LatexCommand. This means that state class cannot be serialized properly. Please see https://jb.gg/ij-psoc
+CompileCommand: exclude com/intellij/openapi/vfs/impl/FilePartNodeRoot.trieDescend bool exclude = true
+2024-08-02 10:00:49,954 [    329]   WARN - #c.i.i.p.PluginManager - Resource bundle redefinition for plugin R4Intellij. Old value: messages.RPluginBundle, new value: messages.RPluginRemoteBundle
+2024-08-02 10:00:50,948 [   1323]   WARN - #c.i.i.u.UITheme - SplitPane.highlight=#50535B  has # prefix but cannot be parsed as color
+2024-08-02 10:00:51,259 [   1634]   WARN - #c.i.i.u.UITheme - *.arc has numeric value but specified as string
+2024-08-02 10:00:51,263 [   1638]   WARN - #c.i.i.u.UITheme - SplitPane.highlight=#50535B  has # prefix but cannot be parsed as color
+2024-08-02 10:00:51,654 [   2029]   WARN - #c.i.s.ComponentManagerImpl - com.intellij.platform.ide.menu.GlobalMenuLinux <clinit> requests com.intellij.openapi.application.Experiments instance. Class initialization must not depend on services. Consider using instance of the service on-demand instead.
+2024-08-02 10:00:52,440 [   2815]   WARN - #c.i.e.t.TargetBasedSdks - SDK target configuration data is absent
+2024-08-02 10:00:52,640 [   3015]   WARN - #c.i.s.ComponentManagerImpl - org.jetbrains.kotlin.idea.gradleJava.scripting.roots.GradleBuildRootDataSerializer <clinit> requests com.intellij.util.gist.storage.GistStorage instance. Class initialization must not depend on services. Consider using instance of the service on-demand instead.
+2024-08-02 10:00:54,792 [   5167]   WARN - #c.i.u.x.Binding - No accessors for com.intellij.openapi.roots.libraries.DummyLibraryProperties. This means that state class cannot be serialized properly. Please see https://jb.gg/ij-psoc
+SLF4J(E): A service provider failed to instantiate:
+org.slf4j.spi.SLF4JServiceProvider: org.slf4j.jul.JULServiceProvider not a subtype
+[DefaultDispatcher-worker-17] INFO org.freedesktop.dbus.connections.transports.TransportBuilder - Using transport dbus-java-transport-native-unixsocket for address unix:path=/run/user/1000/bus
+2024-08-02 10:00:57,817 [   8192]   WARN - #c.i.o.v.n.p.PersistentFSImpl - file[405369, flags: 4]: top parent (id: 356321, name: 'kotlin-stdlib-1.9.10.jar', flags: 775 parent: 0), is still not in the idToDirCache. path: [358467, 356321] [/kotlin-stdlib-1.9.10.jar/META-INF], cachedRoots.size(=200), roots.size(=200), pfs.roots.contains(356321)=false, fs.roots.contains(356321)=true, non-cached roots: 0, cached non-roots: 0, FS roots not PFS roots: 912: 
+
+2024-08-02 10:01:13,425 [  23800]   WARN - #c.i.u.x.Binding - No accessors for org.jetbrains.kotlin.cli.common.arguments.InternalArgument. This means that state class cannot be serialized properly. Please see https://jb.gg/ij-psoc
+2024-08-02 10:01:13,497 [  23872]   WARN - #c.i.u.x.Binding - No accessors for org.jetbrains.kotlin.idea.projectConfiguration.KotlinNotConfiguredSuppressedModulesState. This means that state class cannot be serialized properly. Please see https://jb.gg/ij-psoc
+2024-08-02 10:01:13,627 [  24002]   WARN - #c.i.u.x.Binding - No accessors for nl.hannahsten.texifyidea.lang.commands.LatexCommand. This means that state class cannot be serialized properly. Please see https://jb.gg/ij-psoc
+2024-08-02 10:01:19,787 [  30162]   WARN - #c.i.o.o.e.ConfigurableExtensionPointUtil - ignore deprecated groupId: language for id: preferences.language.Kotlin.scripting
+2024-08-02 10:01:21,648 [  32023]   WARN - #com.github.weisj.jsvg.parser.NodeMap - unsupported RDF
+2024-08-02 10:01:21,671 [  32046]   WARN - #com.github.weisj.jsvg.parser.NodeMap - unsupported namedview
+2024-08-02 10:01:21,678 [  32053]   WARN - #com.github.weisj.jsvg.parser.NodeMap - unsupported xmpmeta
+2024-08-02 10:01:21,686 [  32061]   WARN - com.github.weisj.jsvg.parser.css.impl.SimpleCssParser - Expected 'CURLY_OPEN' but got 'Token{type=EOF, data='null'}'
+2024-08-02 10:01:21,762 [  32137]   WARN - #com.github.weisj.jsvg.parser.NodeMap - unsupported namedview
+2024-08-02 10:01:21,772 [  32147]   WARN - #com.github.weisj.jsvg.parser.NodeMap - unsupported RDF
+2024-08-02 10:01:21,813 [  32188]   WARN - #c.i.i.p.n.PluginLogo - Cannot load plugin icon (file=/home/bork/.cache/JetBrains/IntelliJIdea2024.1/plugins/imageCache/CopilotDarkTheme.svg)
+java.lang.NullPointerException: Cannot invoke "com.github.weisj.jsvg.renderer.awt.PlatformSupport.b()" because "context.a" is null
+	at com.github.weisj.jsvg.cJ.intrinsicSize(SourceFile:45)
+	at com.github.weisj.jsvg.aM.a(SourceFile:118)
+	at com.github.weisj.jsvg.bn.a(SourceFile:1101)
+	at com.github.weisj.jsvg.bl.a(SourceFile:140)
+	at com.github.weisj.jsvg.aU.a(SourceFile:186)
+	at com.github.weisj.jsvg.aU.c(SourceFile:147)
+	at com.github.weisj.jsvg.cO.a(SourceFile:81)
+	at com.github.weisj.jsvg.aU.a(SourceFile:147)
+	at com.github.weisj.jsvg.cV.a(SourceFile:1158)
+	at com.github.weisj.jsvg.ba.a(SourceFile:152)
+	at com.github.weisj.jsvg.bn.a(SourceFile:1101)
+	at com.github.weisj.jsvg.bn.a(SourceFile:1101)
+	at com.github.weisj.jsvg.bn.a(SourceFile:1101)
+	at com.github.weisj.jsvg.bl.a(SourceFile:140)
+	at com.github.weisj.jsvg.nodes.SVG.renderWithSize(SourceFile:144)
+	at com.intellij.ui.svg.JsvgKt.renderSvgWithSize(jsvg.kt:46)
+	at com.intellij.ui.svg.JsvgKt.renderSvgWithSize$default(jsvg.kt:39)
+	at com.intellij.ui.svg.SvgKt.loadWithSizes(svg.kt:301)
+	at com.intellij.ui.svg.SvgKt.loadWithSizes$default(svg.kt:292)
+	at com.intellij.ide.plugins.newui.PluginLogoKt.loadFileIcon(PluginLogo.kt:175)
+	at com.intellij.ide.plugins.newui.PluginLogoKt.tryLoadIcon(PluginLogo.kt:340)
+	at com.intellij.ide.plugins.newui.PluginLogoKt.loadPluginIconsFromUrl(PluginLogo.kt:197)
+	at com.intellij.ide.plugins.newui.PluginLogoKt.access$loadPluginIconsFromUrl(PluginLogo.kt:1)
+	at com.intellij.ide.plugins.newui.PluginLogoLoader$schedulePluginIconLoading$1$1.invokeSuspend(PluginLogo.kt:382)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:108)
+	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:115)
+	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:103)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:793)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:697)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:684)
+2024-08-02 10:01:22,208 [  32583]   WARN - #com.github.weisj.jsvg.parser.NodeMap - unsupported RDF
+2024-08-02 10:01:22,209 [  32584]   WARN - #com.github.weisj.jsvg.parser.NodeMap - unsupported namedview
+2024-08-02 10:01:26,281 [  36656]   WARN - #com.github.weisj.jsvg.parser.NodeMap - unsupported namedview
+2024-08-02 10:01:26,673 [  37048]   WARN - #c.i.i.p.n.PluginLogo - Cannot load plugin icon (file=/home/bork/.cache/JetBrains/IntelliJIdea2024.1/plugins/imageCache/com.joshdavies.fptheme.svg)
+java.lang.NullPointerException: Cannot invoke "com.github.weisj.jsvg.renderer.awt.PlatformSupport.b()" because "context.a" is null
+	at com.github.weisj.jsvg.cJ.intrinsicSize(SourceFile:45)
+	at com.github.weisj.jsvg.aM.a(SourceFile:118)
+	at com.github.weisj.jsvg.bf.a(SourceFile:179)
+	at com.github.weisj.jsvg.bn.a(SourceFile:1101)
+	at com.github.weisj.jsvg.bl.a(SourceFile:140)
+	at com.github.weisj.jsvg.aU.a(SourceFile:186)
+	at com.github.weisj.jsvg.aU.c(SourceFile:147)
+	at com.github.weisj.jsvg.cO.a(SourceFile:81)
+	at com.github.weisj.jsvg.aU.a(SourceFile:147)
+	at com.github.weisj.jsvg.cV.a(SourceFile:1158)
+	at com.github.weisj.jsvg.ba.a(SourceFile:152)
+	at com.github.weisj.jsvg.bn.a(SourceFile:1101)
+	at com.github.weisj.jsvg.bl.a(SourceFile:140)
+	at com.github.weisj.jsvg.nodes.SVG.renderWithSize(SourceFile:144)
+	at com.intellij.ui.svg.JsvgKt.renderSvgWithSize(jsvg.kt:46)
+	at com.intellij.ui.svg.JsvgKt.renderSvgWithSize$default(jsvg.kt:39)
+	at com.intellij.ui.svg.SvgKt.loadWithSizes(svg.kt:301)
+	at com.intellij.ui.svg.SvgKt.loadWithSizes$default(svg.kt:292)
+	at com.intellij.ide.plugins.newui.PluginLogoKt.loadFileIcon(PluginLogo.kt:175)
+	at com.intellij.ide.plugins.newui.PluginLogoKt.tryLoadIcon(PluginLogo.kt:340)
+	at com.intellij.ide.plugins.newui.PluginLogoKt.loadPluginIconsFromUrl(PluginLogo.kt:197)
+	at com.intellij.ide.plugins.newui.PluginLogoKt.access$loadPluginIconsFromUrl(PluginLogo.kt:1)
+	at com.intellij.ide.plugins.newui.PluginLogoLoader$schedulePluginIconLoading$1$1.invokeSuspend(PluginLogo.kt:382)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:108)
+	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:115)
+	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:103)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:584)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:793)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:697)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:684)
+2024-08-02 10:01:50,381 [  60756]   WARN - #c.i.u.x.Binding - No accessors for com.intellij.platform.feedback.impl.state.DontShowAgainFeedbackState. This means that state class cannot be serialized properly. Please see https://jb.gg/ij-psoc
+2024-08-02 10:01:50,381 [  60756]   WARN - #c.i.u.x.Binding - No accessors for com.intellij.platform.feedback.impl.state.CommonFeedbackSurveysState. This means that state class cannot be serialized properly. Please see https://jb.gg/ij-psoc
+2024-08-02 10:03:12,868 [ 143243]   WARN - #c.i.o.o.e.ConfigurableCardPanel - auto-dispose 'Plugins' id=preferences.pluginManager
+2024-08-02 10:03:13,163 [ 143538]   WARN - #c.i.u.x.Binding - No accessors for com.intellij.openapi.projectRoots.Sdk. This means that state class cannot be serialized properly. Please see https://jb.gg/ij-psoc

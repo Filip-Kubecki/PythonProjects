@@ -24,7 +24,7 @@ class PausedGameScreen(pygame.Surface):
         self.menu_background = pygame.Rect(225, 300, 400, 100)
 
         # Menu buttons
-        self.exit_icon = Button(55, 55, (525, 325), Textures_src.UI_EXIT_ICON)
+        self.exit_icon = Button(65, 65, (525, 325), Textures_src.UI_EXIT_ICON)
         self.option_icon = Button(
             55, 55, (400, 325), Textures_src.UI_OPTION_ICON)
         self.restart_icon = Button(

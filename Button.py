@@ -1,6 +1,7 @@
 import pygame
 import Style
 import tools
+from config import *
 
 
 class Button(pygame.Surface):
@@ -10,6 +11,10 @@ class Button(pygame.Surface):
 
         self.fill(Style.LIGHT_GREEN)
         self.set_alpha(255)
+
+        self.rect_background = pygame.Rect(0, 0, 65, 65)
+        # pygame.draw.rect(self, Style.MOSSE_GREEN,
+        #                 self.rect_background, 200, 10)
 
         self.icon = pygame.image.load(icon_src)
         self.blit(self.icon, (0, 0))
