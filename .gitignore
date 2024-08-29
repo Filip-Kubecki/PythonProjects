@@ -1,5 +1,2 @@
-get-pip.py
-SnakeWithPyGame/__pycache__
-SnakeWithTkinter/__pycache__
-SnakeWithPyGame/__pycache__/Snake.cpython-312.pyc
-SnakeWithPyGame/nohup.out
+__pycache__/*
+
