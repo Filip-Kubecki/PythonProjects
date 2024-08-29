@@ -101,9 +101,8 @@ while running:
 
     # Start game when WSAD pressed
     if (keys[pygame.K_w] or
-        keys[pygame.K_s] or
-        keys[pygame.K_a] or
-            keys[pygame.K_d]):
+        keys[pygame.K_d] or
+            keys[pygame.K_a]):
         game_started = True
 
     # Update state of snake: position and directions of segments

@@ -1,7 +1,7 @@
 import pygame
 import tools
 import Textures_src
-import config
+from config import *
 from Snake import Snake
 from Apple import Apple
 from random import randrange
@@ -13,24 +13,28 @@ class GameInstance(pygame.Surface):
         self.obstacles = list()
 
         self.screen = pygame.surface.Surface(
-            (config.GAME_INSTANCE_WIDTH, config.GAME_INSTANCE_HEIGHT)
+            (GAME_INSTANCE_WIDTH, GAME_INSTANCE_HEIGHT)
         )
 
         # Initializing list with all possible positions on board
         self._position_indexes = list()
-        for i in range((config.GAME_INSTANCE_WIDTH//config.TILE_LEN)*(config.GAME_INSTANCE_HEIGHT//config.TILE_LEN)):
+        for i in range((GAME_INSTANCE_WIDTH//TILE_LEN)*(GAME_INSTANCE_HEIGHT//TILE_LEN)):
             self._position_indexes.append(i)
 
         # Backgroung setup
         self._bgTile = pygame.image.load(Textures_src.BACKGROUND_GAME_TILE)
+        if TILE_LEN > 20:
+            scale = TILE_LEN // 20
+            self._bgTile = pygame.transform.scale_by(self._bgTile, scale)
+
         tools.tileBackground(self.screen, self._bgTile)
 
         # Snake object setup
         self.snake = Snake(
-            (config.GAME_INSTANCE_WIDTH // 2) -
-            ((config.GAME_INSTANCE_WIDTH // 2) % 20),
-            (config.GAME_INSTANCE_HEIGHT // 2) -
-            ((config.GAME_INSTANCE_HEIGHT // 2) % 20)
+            (GAME_INSTANCE_WIDTH // 2) -
+            ((GAME_INSTANCE_WIDTH // 2) % TILE_LEN),
+            (GAME_INSTANCE_HEIGHT // 2) -
+            ((GAME_INSTANCE_HEIGHT // 2) % TILE_LEN)
         )
 
         # Apple object setup

@@ -12,12 +12,12 @@ class Button(pygame.Surface):
         self.fill(Style.LIGHT_GREEN)
         self.set_alpha(255)
 
-        self.rect_background = pygame.Rect(0, 0, 65, 65)
-        # pygame.draw.rect(self, Style.MOSSE_GREEN,
-        #                 self.rect_background, 200, 10)
+        self.rect_background = pygame.Rect(0, 0, x, y)
 
         self.icon = pygame.image.load(icon_src)
-        self.blit(self.icon, (0, 0))
+        img_len = PAUSE_SCREEN_IMG_REAL_SIZE
+        img_offset = (x/2)-(img_len/2)
+        self.blit(self.icon, (img_offset, img_offset))
 
     def display(self, screen):
         screen.blit(self, self.position)

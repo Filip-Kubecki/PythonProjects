@@ -2,7 +2,7 @@ import pygame
 import pygame.freetype
 import Textures_src
 import Style
-import config
+from config import *
 from Button import Button
 
 
@@ -20,15 +20,35 @@ class PausedGameScreen(pygame.Surface):
         # Title
         self.title = "Pause"
 
-        # Menu buttno background
-        self.menu_background = pygame.Rect(225, 300, 400, 100)
-
         # Menu buttons
-        self.exit_icon = Button(65, 65, (525, 325), Textures_src.UI_EXIT_ICON)
-        self.option_icon = Button(
-            55, 55, (400, 325), Textures_src.UI_OPTION_ICON)
+        button_size = PAUSE_SCREEN_BUTTON_SIZE
+        center_element_width = (WINDOW_WIDTH/2)-(button_size/2)
+        screen_center_y = WINDOW_HEIGHT/2
+        button_y = screen_center_y-(button_size/2)
+
         self.restart_icon = Button(
-            55, 55, (275, 325), Textures_src.UI_RESTART_ICON)
+            button_size, button_size,
+            (center_element_width-button_size-PAUSE_SCREEN_BUTTON_OFFSET, button_y),
+            Textures_src.UI_RESTART_ICON
+        )
+        self.option_icon = Button(
+            button_size, button_size,
+            (center_element_width, button_y),
+            Textures_src.UI_OPTION_ICON
+        )
+        self.exit_icon = Button(
+            button_size, button_size,
+            ((center_element_width+button_size+PAUSE_SCREEN_BUTTON_OFFSET), button_y),
+            Textures_src.UI_EXIT_ICON
+        )
+
+        # Menu buttno background
+        self.menu_background = pygame.Rect(
+            (WINDOW_WIDTH/2)-(PAUSE_SCREEN_BUTTON_MENU_WIDTH/2),
+            screen_center_y-(PAUSE_SCREEN_BUTTON_MENU_HEIGHT/2),
+            PAUSE_SCREEN_BUTTON_MENU_WIDTH,
+            PAUSE_SCREEN_BUTTON_MENU_HEIGHT
+        )
 
         self.buttons = list()
         self.buttons.append(self.restart_icon)
@@ -41,7 +61,7 @@ class PausedGameScreen(pygame.Surface):
         self.title_font.render_to(
             screen,
             ((screen.get_width() // 2) -
-             (self.title_font.get_rect(self.title).width // 2), 225),
+             (self.title_font.get_rect(self.title).width // 2), self.menu_background.y-80),
             self.title,
             Style.MOSSE_GREEN
         )
@@ -65,8 +85,7 @@ class PausedGameScreen(pygame.Surface):
             button.set_alpha(255)
 
         if self.in_focus is not None:
-            self.buttons[self.in_focus].set_alpha(
-                config.DIMMED_BACKGROUND_MAX_ALPHA)
+            self.buttons[self.in_focus].set_alpha(DIMMED_BACKGROUND_MAX_ALPHA)
 
     def next_focused(self):
         if self.in_focus is None:
@@ -83,9 +102,9 @@ class PausedGameScreen(pygame.Surface):
         if self.get_alpha() is None:
             raise Exception("No alpha value exeption")
         else:
-            if self.get_alpha() < config.DIMMED_BACKGROUND_MAX_ALPHA:
+            if self.get_alpha() < DIMMED_BACKGROUND_MAX_ALPHA:
                 self.set_alpha(
-                    self.get_alpha() + config.DIMMED_BACKGROUND_ALPHA_INCREMENT
+                    self.get_alpha() + DIMMED_BACKGROUND_ALPHA_INCREMENT
                 )
 
     def hide_background(self):
