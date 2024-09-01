@@ -4,13 +4,13 @@ import Textures_src
 from config import *
 from Snake import Snake
 from Apple import Apple
+from Obstacle import Obstacle
 from random import randrange
 
 
 class GameInstance(pygame.Surface):
     def __init__(self):
         print("Game instance initialization ---------------")
-        self.obstacles = list()
 
         self.screen = pygame.surface.Surface(
             (GAME_INSTANCE_WIDTH, GAME_INSTANCE_HEIGHT)
@@ -20,6 +20,15 @@ class GameInstance(pygame.Surface):
         self._position_indexes = list()
         for i in range((GAME_INSTANCE_WIDTH//TILE_LEN)*(GAME_INSTANCE_HEIGHT//TILE_LEN)):
             self._position_indexes.append(i)
+
+        # Obstacle setup
+        self.obstacles = list()
+        self.obstacles.append(Obstacle(tools.index_to_position(86)))
+        self.obstacles.append(Obstacle(tools.index_to_position(53)))
+        self.obstacles.append(Obstacle(tools.index_to_position(62)))
+
+        self.obstacles.append(Obstacle(tools.index_to_position(3)))
+        # self.obstacles = tools.generate_obstacle_border()
 
         # Backgroung setup
         self._bgTile = pygame.image.load(Textures_src.BACKGROUND_GAME_TILE)
@@ -44,6 +53,9 @@ class GameInstance(pygame.Surface):
     def run_game_cycle(self):
         # fill the screen with a color to wipe away anything from last frame
         tools.tileBackground(self.screen, self._bgTile)
+
+        # Draw obstacles
+        self.obstacle_draw_and_check_collision()
 
         # Draw apple object
         self.apple.draw_apple(self.screen)
@@ -76,10 +88,22 @@ class GameInstance(pygame.Surface):
 
         snake_indexes = self.snake.get_position_indexes()
 
-        for i in (range(len(snake_indexes)-1)):
-            free_indexes.remove(snake_indexes[i])
+        for i in snake_indexes:
+            free_indexes.remove(i)
 
-        random_index = tools.index_to_position(
-            free_indexes[randrange(0, len(free_indexes))]
-        )
-        self.apple.set_position(random_index)
+        for i in self.obstacles:
+            free_indexes.remove(tools.position_to_index(i.get_position()))
+
+        if free_indexes:
+            random_index = tools.index_to_position(
+                free_indexes[randrange(0, len(free_indexes))]
+            )
+            self.apple.set_position(random_index)
+
+    def obstacle_draw_and_check_collision(self):
+        for obstacle in self.obstacles:
+            obstacle.draw(self.screen)
+            if obstacle.rect.colliderect(self.snake.segments[0].rect):
+                self.snake.decapitate(self.screen)
+                return True
+        return False

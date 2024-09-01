@@ -1,6 +1,7 @@
 from enum import Enum
 import pygame
 import math
+from Obstacle import Obstacle
 from config import *
 
 
@@ -77,6 +78,29 @@ def index_to_position(index):
 def position_to_index(position):
     return ((position[0]//TILE_LEN) +
             ((position[1]//TILE_LEN)*(GAME_INSTANCE_WIDTH//TILE_LEN)))
+
+
+def generate_obstacle_border():
+    obstacles = list()
+    for i in range(GAME_INSTANCE_WIDTH//TILE_LEN):
+        obstacles.append(Obstacle(index_to_position(i)))
+        obstacles.append(Obstacle(
+            index_to_position(i+((GAME_INSTANCE_WIDTH//TILE_LEN)
+                              * ((GAME_INSTANCE_HEIGHT//TILE_LEN)-1)))
+        ))
+
+    for i in range((GAME_INSTANCE_HEIGHT//TILE_LEN)):
+        obstacles.append(
+            Obstacle(index_to_position(
+                i*(GAME_INSTANCE_WIDTH//TILE_LEN))
+            ))
+        obstacles.append(
+            Obstacle(index_to_position(
+                i*(GAME_INSTANCE_WIDTH//TILE_LEN) +
+                (GAME_INSTANCE_WIDTH//TILE_LEN)-1
+            )))
+
+    return obstacles
 
 
 class Direction(Enum):

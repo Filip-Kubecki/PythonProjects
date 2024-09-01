@@ -65,23 +65,33 @@ class Snake():
         for segment in self.segments:
             match segment.direction:
                 case Direction.UP:
-                    if segment.rect.y <= 0:
+                    if segment.rect.y <= 0 and not config.GAME_INSTANCE_BORDER_COLLISION:
                         segment.rect.y = screen.get_height()-config.TILE_LEN
+                    elif segment.rect.y <= 0:
+                        self.self_collision(screen)
                     else:
                         segment.rect.y -= config.TILE_LEN
                 case Direction.DOWN:
-                    if segment.rect.y >= screen.get_height()-config.TILE_LEN:
+                    if (segment.rect.y >= screen.get_height()-config.TILE_LEN and
+                            not config.GAME_INSTANCE_BORDER_COLLISION):
                         segment.rect.y = 0
+                    elif (segment.rect.y >= screen.get_height()-config.TILE_LEN):
+                        self.self_collision(screen)
                     else:
                         segment.rect.y += config.TILE_LEN
                 case Direction.LEFT:
-                    if segment.rect.x <= 0:
+                    if segment.rect.x <= 0 and not config.GAME_INSTANCE_BORDER_COLLISION:
                         segment.rect.x = screen.get_width()-config.TILE_LEN
+                    elif segment.rect.x <= 0:
+                        self.self_collision(screen)
                     else:
                         segment.rect.x -= config.TILE_LEN
                 case Direction.RIGHT:
-                    if segment.rect.x >= screen.get_width()-config.TILE_LEN:
+                    if (segment.rect.x >= screen.get_width()-config.TILE_LEN and
+                            not config.GAME_INSTANCE_BORDER_COLLISION):
                         segment.rect.x = 0
+                    elif segment.rect.x >= screen.get_width()-config.TILE_LEN:
+                        self.self_collision(screen)
                     else:
                         segment.rect.x += config.TILE_LEN
 

@@ -2,12 +2,12 @@
 # Contains all values that are intended to be changed
 
 # Snake related values
-SNAKE_SEGMENT_NUMBER = 3
-SNAKE_START_SPEED = 10  # Smaller number -> faster
+SNAKE_SEGMENT_NUMBER = 4
+SNAKE_START_SPEED = 12  # Smaller number -> faster
 
 # UI related values
 # Window
-WINDOW_WIDTH = 900
+WINDOW_WIDTH = 1000
 WINDOW_HEIGHT = 600
 
 # Pause/Game Over screens
@@ -21,8 +21,9 @@ PAUSE_SCREEN_BUTTON_MENU_WIDTH = (
 PAUSE_SCREEN_BUTTON_MENU_HEIGHT = 110
 
 # Game Instance
-GAME_INSTANCE_BORDER = 6
-GAME_INSTANCE_SCALE = 1
+GAME_INSTANCE_BORDER_COLLISION = True
+GAME_INSTANCE_BORDER_WIDTH = 6
+GAME_INSTANCE_SCALE = 2
 TILE_LEN = 20 * GAME_INSTANCE_SCALE
 GAME_INSTANCE_TOP_MARGIN = int(WINDOW_HEIGHT / 7)
 

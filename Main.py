@@ -62,19 +62,24 @@ while running:
     if board.snake_collision_game_over():
         game_over = True
 
+    # Obstacle collision - game over
+    if board.obstacle_draw_and_check_collision():
+        game_over = True
+
     # Main surface background
     screen.fill(Style.DARK_GREEN)
     pygame.draw.rect(  # Border around board
         screen,
-        Style.DARK_BROWN,   # Color of the border
+        # Color of the border
+        Style.DARK_BROWN if not GAME_INSTANCE_BORDER_COLLISION else Style.DARK_RED,
         pygame.Rect(
             (WINDOW_WIDTH-(GAME_INSTANCE_WIDTH + \
-             (GAME_INSTANCE_BORDER*2)))//2,   # X position
-            GAME_INSTANCE_TOP_MARGIN-GAME_INSTANCE_BORDER,      # Y position
-            GAME_INSTANCE_WIDTH + (GAME_INSTANCE_BORDER*2),   # Width
-            GAME_INSTANCE_HEIGHT + (GAME_INSTANCE_BORDER*2)   # Height
+             (GAME_INSTANCE_BORDER_WIDTH*2)))//2,   # X position
+            GAME_INSTANCE_TOP_MARGIN-GAME_INSTANCE_BORDER_WIDTH,      # Y position
+            GAME_INSTANCE_WIDTH + (GAME_INSTANCE_BORDER_WIDTH*2),   # Width
+            GAME_INSTANCE_HEIGHT + (GAME_INSTANCE_BORDER_WIDTH*2)   # Height
         ),
-        GAME_INSTANCE_BORDER,              # Border width
+        GAME_INSTANCE_BORDER_WIDTH,              # Border width
         7               # Border radius
     )
 
