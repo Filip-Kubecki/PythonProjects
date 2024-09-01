@@ -3,7 +3,7 @@ from pygame.display import Info
 import pygame.freetype
 import Textures_src
 import Style
-import config
+from config import *
 from Button import Button
 
 
@@ -20,11 +20,24 @@ class GameOverScreen(pygame.Surface):
         # Title
         self.title = "Game over"
 
-        # Menu buttno background
-        self.menu_background = pygame.Rect(350, 300, 150, 100)
+        # Menu buttons
+        button_size = PAUSE_SCREEN_BUTTON_SIZE
+        center_element_width = (WINDOW_WIDTH/2)-(button_size/2)
+        screen_center_y = WINDOW_HEIGHT/2
+        button_y = screen_center_y-(button_size/2)
+
+        self.menu_background = pygame.Rect(
+            (WINDOW_WIDTH/2)-(GAME_OVER_SCREEN_BUTTON_MENU_WIDTH/2),
+            screen_center_y-(GAME_OVER_SCREEN_BUTTON_MENU_HEIGHT/2),
+            GAME_OVER_SCREEN_BUTTON_MENU_WIDTH,
+            GAME_OVER_SCREEN_BUTTON_MENU_HEIGHT
+        )
 
         self.restart_icon = Button(
-            55, 55, (400, 325), Textures_src.UI_RESTART_ICON)
+            button_size, button_size,
+            (center_element_width, button_y),
+            Textures_src.UI_RESTART_ICON
+        )
 
         self.in_focus = None
 
@@ -32,7 +45,7 @@ class GameOverScreen(pygame.Surface):
         self.title_font.render_to(
             screen,
             ((screen.get_width() // 2) -
-             (self.title_font.get_rect(self.title).width // 2), 225),
+             (self.title_font.get_rect(self.title).width // 2), self.menu_background.y-80),
             self.title,
             Style.MOSSE_GREEN
         )
@@ -49,7 +62,7 @@ class GameOverScreen(pygame.Surface):
         self.restart_icon.hover()
 
         if self.in_focus is not None:
-            self.restart_icon.set_alpha(config.DIMMED_BACKGROUND_MAX_ALPHA)
+            self.restart_icon.set_alpha(DIMMED_BACKGROUND_MAX_ALPHA)
         else:
             self.restart_icon.set_alpha(255)
 
@@ -63,9 +76,9 @@ class GameOverScreen(pygame.Surface):
         if self.get_alpha() is None:
             raise Exception("No alpha value exeption")
         else:
-            if self.get_alpha() < config.DIMMED_BACKGROUND_MAX_ALPHA:
+            if self.get_alpha() < DIMMED_BACKGROUND_MAX_ALPHA:
                 self.set_alpha(
-                    self.get_alpha() + config.DIMMED_BACKGROUND_ALPHA_INCREMENT
+                    self.get_alpha() + DIMMED_BACKGROUND_ALPHA_INCREMENT
                 )
 
     def hide_background(self):

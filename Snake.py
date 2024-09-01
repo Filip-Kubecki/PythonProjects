@@ -42,10 +42,58 @@ class Snake():
 
     def decapitate(self, screen):
         self.segments.pop(0)
-        self.segments[0].texture_state = Snake_texture_state.COLLIDED
-        self.segments[0].change_texture()
-        self.segments[0].rotate_texture()
-        self.segments[0].draw_segment(screen)
+
+        head = self.segments[0]
+        head_direction = head.direction
+        prev_direction = self.segments[1].direction
+
+        match head_direction:
+            case Direction.UP:
+                match prev_direction:
+                    case Direction.LEFT:
+                        head.texture_state = Snake_texture_state.COL_UP_RIGHT
+                        head.change_texture()
+                        head.rotate_img(90.0)
+                    case Direction.RIGHT:
+                        head.texture_state = Snake_texture_state.COL_UP_LEFT
+                        head.change_texture()
+                        head.rotate_img(-90.0)
+            case Direction.DOWN:
+                match prev_direction:
+                    case Direction.LEFT:
+                        head.texture_state = Snake_texture_state.COL_UP_LEFT
+                        head.change_texture()
+                        head.rotate_img(90.0)
+                    case Direction.RIGHT:
+                        head.texture_state = Snake_texture_state.COL_UP_RIGHT
+                        head.change_texture()
+                        head.rotate_img(-90.0)
+            case Direction.LEFT:
+                match prev_direction:
+                    case Direction.UP:
+                        head.texture_state = Snake_texture_state.COL_UP_LEFT
+                        head.change_texture()
+                    case Direction.DOWN:
+                        head.texture_state = Snake_texture_state.COL_UP_RIGHT
+                        head.change_texture()
+                        head.rotate_img(180.0)
+            case Direction.RIGHT:
+                match prev_direction:
+                    case Direction.UP:
+                        head.texture_state = Snake_texture_state.COL_UP_RIGHT
+                        head.change_texture()
+                    case Direction.DOWN:
+                        head.texture_state = Snake_texture_state.COL_UP_LEFT
+                        head.change_texture()
+                        head.rotate_img(180.0)
+
+        if head_direction == prev_direction:
+            head.texture_state = Snake_texture_state.COLLIDED
+            head.change_texture()
+            head.rotate_texture()
+
+        head.draw_segment(screen)
+        self.segments[0] = head
 
     def change_direction(self, new_direction):
         # Protecting user from turning snake head in the direction of its body
@@ -162,7 +210,7 @@ class Snake():
 
 class Segment():
     def __init__(self, x, y):
-        self.direction = Direction.NONE
+        self.direction = Direction.UP
         self.rect = pygame.rect.Rect(x, y, config.TILE_LEN, config.TILE_LEN)
         self.img = pygame.image.load(Textures_src.SNAKE_TAIL)
         self.scale = 1
@@ -187,6 +235,9 @@ class Segment():
             self.texture_state is Snake_texture_state.COLLIDED or
                 self.texture_state is Snake_texture_state.SEGMENT):
             self.rotate_texture()
+
+    def rotate_img(self, angle):
+        self.img = pygame.transform.rotate(self.img, angle)
 
     def rotate_texture(self):
         # Rotates texture to the direction of movement
@@ -232,31 +283,29 @@ class Segment():
         match self.texture_state:
             case Snake_texture_state.HEAD:
                 self.img = pygame.image.load(Textures_src.SNAKE_HEAD)
-                self.img = pygame.transform.scale_by(self.img, self.scale)
             case Snake_texture_state.TAIL:
                 self.img = pygame.image.load(Textures_src.SNAKE_TAIL)
-                self.img = pygame.transform.scale_by(self.img, self.scale)
             case Snake_texture_state.SEGMENT:
                 self.img = pygame.image.load(Textures_src.SNAKE_SEGMENT)
-                self.img = pygame.transform.scale_by(self.img, self.scale)
             case Snake_texture_state.DOWN_RIGHT:
                 self.img = pygame.image.load(Textures_src.SNAKE_BEND)
                 self.img = pygame.transform.rotate(self.img, 180.0)
                 self.angle = 180.0
-                self.img = pygame.transform.scale_by(self.img, self.scale)
             case Snake_texture_state.DOWN_LEFT:
                 self.img = pygame.image.load(Textures_src.SNAKE_BEND)
                 self.img = pygame.transform.rotate(self.img, 270.0)
                 self.angle = 270.0
-                self.img = pygame.transform.scale_by(self.img, self.scale)
             case Snake_texture_state.UP_RIGHT:
                 self.img = pygame.image.load(Textures_src.SNAKE_BEND)
                 self.img = pygame.transform.rotate(self.img, 90.0)
-                self.img = pygame.transform.scale_by(self.img, self.scale)
                 self.angle = 90.0
             case Snake_texture_state.UP_LEFT:
                 self.img = pygame.image.load(Textures_src.SNAKE_BEND)
-                self.img = pygame.transform.scale_by(self.img, self.scale)
             case Snake_texture_state.COLLIDED:
                 self.img = pygame.image.load(Textures_src.SNAKE_COLLIDED)
-                self.img = pygame.transform.scale_by(self.img, self.scale)
+            case Snake_texture_state.COL_UP_RIGHT:
+                self.img = pygame.image.load(Textures_src.SNAKE_COLLIDED_RIGHT)
+            case Snake_texture_state.COL_UP_LEFT:
+                self.img = pygame.image.load(Textures_src.SNAKE_COLLIDED_LEFT)
+
+        self.img = pygame.transform.scale_by(self.img, self.scale)

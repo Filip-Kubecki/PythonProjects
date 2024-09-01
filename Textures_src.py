@@ -10,6 +10,8 @@ SNAKE_SEGMENT = "img/snake_straight.png"
 SNAKE_TAIL = "img/snake_tail.png"
 SNAKE_BEND = "img/snake_bend_bottom_to_left.png"
 SNAKE_COLLIDED = "img/snake_collided.png"
+SNAKE_COLLIDED_LEFT = "img/snake_collided_bottom_to_left.png"
+SNAKE_COLLIDED_RIGHT = "img/snake_collided_bottom_to_right.png"
 
 # Backgrounds
 BACKGROUND_GAME_TILE = "img/backgroundTile.png"

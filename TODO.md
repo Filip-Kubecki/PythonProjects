@@ -5,6 +5,7 @@ TODO:
 - add leader board to game - score tracking
 - add reaction for achieving maximal snake length (protect game from it)
 - add proper scaling to Game Over screen
+- add border (collie)
 
 Bugs:
 - add snake collision textures from collisions when HEAD makes turn

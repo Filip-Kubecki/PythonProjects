@@ -115,8 +115,16 @@ class Snake_texture_state(Enum):
     HEAD = 1
     SEGMENT = 2
     TAIL = 3
+
+    # Bend
     UP_LEFT = 4
     UP_RIGHT = 5
     DOWN_LEFT = 6
     DOWN_RIGHT = 7
+
+    # Collision
     COLLIDED = 8
+    COL_UP_LEFT = 9
+    COL_UP_RIGHT = 10
+    COL_DOWN_LEFT = 11
+    COL_DOWN_RIGHT = 12
