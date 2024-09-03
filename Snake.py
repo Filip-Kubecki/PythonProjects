@@ -32,6 +32,9 @@ class Snake():
         tail.direction = Direction.UP
         self.segments.append(tail)
 
+        self._new_segment = Segment(-10, -10)
+        self._add_segment = False
+
     def self_collision(self, screen):
         head = self.segments[0]
         for segment in self.segments[1:]:
@@ -143,6 +146,10 @@ class Snake():
                     else:
                         segment.rect.x += config.TILE_LEN
 
+        if self._add_segment:
+            self.segments.append(self._new_segment)
+            self._add_segment = False
+
         self.update_direction()
 
     def update_direction(self):
@@ -168,20 +175,46 @@ class Snake():
         tail = self.segments[-1]
 
         new_segment = Segment(tail.rect.x, tail.rect.y)
-
-        match tail.direction:
-            case Direction.UP:
-                new_segment.rect.y += config.TILE_LEN
-            case Direction.DOWN:
-                new_segment.rect.y -= config.TILE_LEN
-            case Direction.LEFT:
-                new_segment.rect.x += config.TILE_LEN
-            case Direction.RIGHT:
-                new_segment.rect.x -= config.TILE_LEN
-
         new_segment.texture_state = Snake_texture_state.TAIL
         new_segment.direction = tail.direction
         new_segment.change_direction(tail.direction)
+        self._new_segment = new_segment
+
+        game_width = config.GAME_INSTANCE_WIDTH
+        game_height = config.GAME_INSTANCE_HEIGHT
+
+        match tail.direction:
+            case Direction.UP:
+                if new_segment.rect.y + config.TILE_LEN >= game_height:
+                    self._add_segment = True
+                    return
+                else:
+                    new_segment.rect.y += config.TILE_LEN
+            case Direction.DOWN:
+                if new_segment.rect.y - config.TILE_LEN <= 0:
+                    self._add_segment = True
+                    return
+                else:
+                    new_segment.rect.y -= config.TILE_LEN
+            case Direction.LEFT:
+                if new_segment.rect.x + config.TILE_LEN >= game_width:
+                    self._add_segment = True
+                    return
+                else:
+                    new_segment.rect.x += config.TILE_LEN
+            case Direction.RIGHT:
+                if new_segment.rect.x - config.TILE_LEN <= 0:
+                    self._add_segment = True
+                    return
+                else:
+                    new_segment.rect.x -= config.TILE_LEN
+
+        for segment in self.segments[1:]:
+            if new_segment.rect.colliderect(segment.rect):
+                self._new_segment = Segment(tail.rect.x, tail.rect.y)
+                self._add_segment = True
+                return
+
         self.segments.append(new_segment)
 
         # new_segment.direction = tail.direction
@@ -191,13 +224,13 @@ class Snake():
             self.segments[-2].rotate_texture()
 
     def key_event(self, key_event):
-        if key_event[pygame.K_w]:
+        if key_event[pygame.K_w] or key_event[pygame.K_UP]:
             self.change_direction(Direction.UP)
-        elif key_event[pygame.K_s]:
+        elif key_event[pygame.K_s] or key_event[pygame.K_DOWN]:
             self.change_direction(Direction.DOWN)
-        elif key_event[pygame.K_a]:
+        elif key_event[pygame.K_a] or key_event[pygame.K_LEFT]:
             self.change_direction(Direction.LEFT)
-        elif key_event[pygame.K_d]:
+        elif key_event[pygame.K_d] or key_event[pygame.K_RIGHT]:
             self.change_direction(Direction.RIGHT)
 
     def get_position_indexes(self):
@@ -205,7 +238,7 @@ class Snake():
         for segment in self.segments:
             position = (segment.rect.x, segment.rect.y)
             indexes.append(tools.position_to_index(position))
-        return indexes
+        return indexes.copy()
 
 
 class Segment():

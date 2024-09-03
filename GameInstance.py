@@ -20,14 +20,10 @@ class GameInstance(pygame.Surface):
         self._position_indexes = list()
         for i in range((GAME_INSTANCE_WIDTH//TILE_LEN)*(GAME_INSTANCE_HEIGHT//TILE_LEN)):
             self._position_indexes.append(i)
+        print(self._position_indexes)
 
         # Obstacle setup
         self.obstacles = list()
-        self.obstacles.append(Obstacle(tools.index_to_position(86)))
-        self.obstacles.append(Obstacle(tools.index_to_position(53)))
-        self.obstacles.append(Obstacle(tools.index_to_position(62)))
-
-        self.obstacles.append(Obstacle(tools.index_to_position(3)))
         # self.obstacles = tools.generate_obstacle_border()
 
         # Backgroung setup
@@ -85,11 +81,17 @@ class GameInstance(pygame.Surface):
 
     def place_apple(self):
         free_indexes = self._position_indexes.copy()
+        if len(free_indexes) <= 2:
+            print("WIN")
+            return
+        limit = free_indexes[-1]
 
-        snake_indexes = self.snake.get_position_indexes()
+        snake_indexes = self.snake.get_position_indexes().copy()
+        print(snake_indexes)
 
         for i in snake_indexes:
-            free_indexes.remove(i)
+            if i <= limit:
+                free_indexes.remove(i)
 
         for i in self.obstacles:
             free_indexes.remove(tools.position_to_index(i.get_position()))

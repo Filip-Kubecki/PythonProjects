@@ -20,3 +20,5 @@ BACKGROUND_GAME_TILE = "img/backgroundTile.png"
 UI_RESTART_ICON = "img/restart.png"
 UI_OPTION_ICON = "img/options.png"
 UI_EXIT_ICON = "img/exit.png"
+
+BORDER = "img/border.png"

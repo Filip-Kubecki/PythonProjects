@@ -24,6 +24,9 @@ pause_screen = PausedGameScreen(WINDOW_WIDTH, WINDOW_HEIGHT)
 # Game Over screen
 game_over_screen = GameOverScreen(WINDOW_WIDTH, WINDOW_HEIGHT)
 
+# Border
+border = pygame.image.load(Textures_src.BORDER)
+
 # Game variables
 delta_time = 0  # time in seconds since last frame - used for limiting FPS
 counter = 0
@@ -107,7 +110,10 @@ while running:
     # Start game when WSAD pressed
     if (keys[pygame.K_w] or
         keys[pygame.K_d] or
-            keys[pygame.K_a]):
+        keys[pygame.K_a] or
+        keys[pygame.K_LEFT] or
+        keys[pygame.K_RIGHT] or
+            keys[pygame.K_UP]):
         game_started = True
 
     # Update state of snake: position and directions of segments
@@ -124,6 +130,14 @@ while running:
             GAME_INSTANCE_TOP_MARGIN
         )
     )
+
+    if ENABLE_BORDER:
+        border_size = border.get_size()
+        screen.blit(
+            border,
+            (GAME_INSTANCE_WIDTH - border_size[0],
+             GAME_INSTANCE_TOP_MARGIN-border_size[1]+20)
+        )
 
     # Display GameOver screen
     if game_over:
