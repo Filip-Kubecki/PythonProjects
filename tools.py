@@ -52,7 +52,6 @@ def check_if_mouse_collide(mouse_pos, object_pos, object_size):
             mouse_pos[1] > object_pos[1] and
             mouse_pos[1] <= object_pos[1]+object_size[1]):
         return True
-
     return False
 
 

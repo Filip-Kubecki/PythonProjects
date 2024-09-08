@@ -1,7 +1,8 @@
 import pygame
 import pygame.freetype
-import Textures_src
-import Style
+import resources
+from resources import TexturesSrc
+from resources import Style
 from config import *
 from Button import Button
 
@@ -29,17 +30,17 @@ class PausedGameScreen(pygame.Surface):
         self.restart_icon = Button(
             button_size, button_size,
             (center_element_width-button_size-PAUSE_SCREEN_BUTTON_OFFSET, button_y),
-            Textures_src.UI_RESTART_ICON
+            TexturesSrc.UI_RESTART_ICON
         )
         self.option_icon = Button(
             button_size, button_size,
             (center_element_width, button_y),
-            Textures_src.UI_OPTION_ICON
+            TexturesSrc.UI_OPTION_ICON
         )
         self.exit_icon = Button(
             button_size, button_size,
             ((center_element_width+button_size+PAUSE_SCREEN_BUTTON_OFFSET), button_y),
-            Textures_src.UI_EXIT_ICON
+            TexturesSrc.UI_EXIT_ICON
         )
 
         # Menu buttno background

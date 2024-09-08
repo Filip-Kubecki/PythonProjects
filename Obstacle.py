@@ -1,6 +1,6 @@
 import pygame
-import Textures_src
 from config import *
+from resources import Style, TexturesSrc
 
 
 class Obstacle():
@@ -11,10 +11,10 @@ class Obstacle():
             position[1],
             TILE_LEN, TILE_LEN
         )
-        self.icon = pygame.image.load(Textures_src.OBSTACLE)
+        self._icon = pygame.image.load(TexturesSrc.OBSTACLE)
         if TILE_LEN > 20:
             scale = TILE_LEN // 20
-            self.icon = pygame.transform.scale_by(self.icon, scale)
+            self._icon = pygame.transform.scale_by(self._icon, scale)
 
     def draw(self, screen):
         screen.blit(self.icon, (self.rect.x, self.rect.y))

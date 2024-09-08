@@ -7,8 +7,8 @@ SNAKE_START_SPEED = 12  # Smaller number -> faster
 
 # UI related values
 # Window
-WINDOW_WIDTH = 1200
-WINDOW_HEIGHT = 700
+WINDOW_WIDTH = 1800
+WINDOW_HEIGHT = 900
 ENABLE_BORDER = False
 
 # Pause/Game Over screens

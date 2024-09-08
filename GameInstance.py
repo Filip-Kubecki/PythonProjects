@@ -1,11 +1,10 @@
 import pygame
 import tools
-import Textures_src
 from config import *
 from Snake import Snake
 from Apple import Apple
-from Obstacle import Obstacle
 from random import randrange
+from resources import TexturesSrc, Style
 
 
 class GameInstance(pygame.Surface):
@@ -20,14 +19,13 @@ class GameInstance(pygame.Surface):
         self._position_indexes = list()
         for i in range((GAME_INSTANCE_WIDTH//TILE_LEN)*(GAME_INSTANCE_HEIGHT//TILE_LEN)):
             self._position_indexes.append(i)
-        print(self._position_indexes)
 
         # Obstacle setup
         self.obstacles = list()
         # self.obstacles = tools.generate_obstacle_border()
 
         # Backgroung setup
-        self._bgTile = pygame.image.load(Textures_src.BACKGROUND_GAME_TILE)
+        self._bgTile = pygame.image.load(TexturesSrc.BACKGROUND_GAME_TILE)
         if TILE_LEN > 20:
             scale = TILE_LEN // 20
             self._bgTile = pygame.transform.scale_by(self._bgTile, scale)
@@ -35,7 +33,7 @@ class GameInstance(pygame.Surface):
         tools.tileBackground(self.screen, self._bgTile)
 
         # Snake object setup
-        self.snake = Snake(
+        self._snake = Snake(
             (GAME_INSTANCE_WIDTH // 2) -
             ((GAME_INSTANCE_WIDTH // 2) % TILE_LEN),
             (GAME_INSTANCE_HEIGHT // 2) -
@@ -43,7 +41,7 @@ class GameInstance(pygame.Surface):
         )
 
         # Apple object setup
-        self.apple = Apple()
+        self._apple = Apple()
         self.place_apple()
 
     def run_game_cycle(self):
@@ -54,27 +52,27 @@ class GameInstance(pygame.Surface):
         self.obstacle_draw_and_check_collision()
 
         # Draw apple object
-        self.apple.draw_apple(self.screen)
+        self._apple.draw_apple(self.screen)
 
         # Draw snake object
-        self.snake.draw_snake(self.screen)
+        self._snake.draw_snake(self.screen)
 
         keys = pygame.key.get_pressed()
 
-        self.snake.key_event(keys)
+        self._snake.key_event(keys)
 
     def snake_collision_game_over(self):
-        if self.snake.self_collision(self.screen):
+        if self._snake.self_collision(self.screen):
             return True
         return False
 
     def snake_update(self):
-        self.snake.update(self.screen)
+        self._snake.update(self.screen)
 
     def apple_eaten(self):
         # Checking if Snake eats Apple
-        if self.apple.rect.colliderect(self.snake.segments[0].rect):
-            self.snake.add_segment(self)
+        if self._apple.rect.colliderect(self._snake.segments[0].rect):
+            self._snake.add_segment(self)
             self.place_apple()
             return True
         return False
@@ -86,8 +84,7 @@ class GameInstance(pygame.Surface):
             return
         limit = free_indexes[-1]
 
-        snake_indexes = self.snake.get_position_indexes().copy()
-        print(snake_indexes)
+        snake_indexes = self._snake.get_position_indexes().copy()
 
         for i in snake_indexes:
             if i <= limit:
@@ -100,7 +97,7 @@ class GameInstance(pygame.Surface):
             random_index = tools.index_to_position(
                 free_indexes[randrange(0, len(free_indexes))]
             )
-            self.apple.set_position(random_index)
+            self._apple.set_position(random_index)
 
     def obstacle_draw_and_check_collision(self):
         for obstacle in self.obstacles:

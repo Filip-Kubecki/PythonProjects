@@ -1,12 +1,12 @@
-import pygame
-import Style
-import tools
 import pygame.freetype
-import Textures_src
-from config import *
-from GameInstance import GameInstance
-from PausedGameScreen import PausedGameScreen
+import tools
+import pygame
 from GameOverScreen import GameOverScreen
+from PausedGameScreen import PausedGameScreen
+from GameInstance import GameInstance
+from config import *
+from resources import TexturesSrc, Style
+
 
 # Pygame setup
 pygame.init()
@@ -25,7 +25,7 @@ pause_screen = PausedGameScreen(WINDOW_WIDTH, WINDOW_HEIGHT)
 game_over_screen = GameOverScreen(WINDOW_WIDTH, WINDOW_HEIGHT)
 
 # Border
-border = pygame.image.load(Textures_src.BORDER)
+border = pygame.image.load(TexturesSrc.BORDER)
 
 # Game variables
 delta_time = 0  # time in seconds since last frame - used for limiting FPS
@@ -38,7 +38,7 @@ game_tick = SNAKE_START_SPEED
 score = 0
 
 # UI elements
-apple_icon = pygame.image.load(Textures_src.APPLE)
+apple_icon = pygame.image.load(TexturesSrc.APPLE)
 apple_icon = pygame.transform.scale_by(apple_icon, 1.6)
 
 ui_font = pygame.freetype.SysFont('JetBrainsMono NFM, thin', 28)
@@ -76,7 +76,7 @@ while running:
         # Color of the border
         Style.DARK_BROWN if not GAME_INSTANCE_BORDER_COLLISION else Style.DARK_RED,
         pygame.Rect(
-            (WINDOW_WIDTH-(GAME_INSTANCE_WIDTH + \
+            (WINDOW_WIDTH-(GAME_INSTANCE_WIDTH +
              (GAME_INSTANCE_BORDER_WIDTH*2)))//2,   # X position
             GAME_INSTANCE_TOP_MARGIN-GAME_INSTANCE_BORDER_WIDTH,      # Y position
             GAME_INSTANCE_WIDTH + (GAME_INSTANCE_BORDER_WIDTH*2),   # Width
