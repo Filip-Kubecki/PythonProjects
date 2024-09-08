@@ -4,7 +4,6 @@ TODO:
   - sounds on actions: game over, apple eaten etc
 - add leader board to game - score tracking
 - add reaction for achieving maximal snake length (protect game from it)
-- add game main menu
 - add game map creator
 - add options
 - add dynamically appearing obstacles to game

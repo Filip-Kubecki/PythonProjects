@@ -11,6 +11,7 @@ from resources import TexturesSrc, Style
 class GameWrapper(pygame.Surface):
     def __init__(self, width, height):
         super().__init__((width, height), pygame.SRCALPHA)
+        self._visible = False
 
         self._board = GameInstance()
         self.pause_screen = PausedGameScreen(width, height)
@@ -211,3 +212,12 @@ class GameWrapper(pygame.Surface):
             keys[pygame.K_RIGHT] or
                 keys[pygame.K_UP]):
             self._game_started = True
+
+    def stop(self):
+        self.running = False
+
+    def toggle_visible(self):
+        self._visible = not self._visible
+
+    def get_visible(self):
+        return self._visible

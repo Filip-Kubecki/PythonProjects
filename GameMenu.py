@@ -5,9 +5,15 @@ from resources import TexturesSrc, Style
 
 
 class GameMenu(pygame.Surface):
-    def __init__(self, width, height):
+    def __init__(
+        self,
+        width,
+        height,
+        play_method=None,
+        options_method=None,
+        exit_method=None
+    ):
         super().__init__((width, height))
-
         self.fill(Style.DARK_GREEN)
 
         # Title banner
@@ -26,20 +32,23 @@ class GameMenu(pygame.Surface):
             400, 100,   # Button size
             (button_x_center, 350),   # Button position
             text="Play",
-            font=self._button_font
+            font=self._button_font,
+            method=play_method
         )
         self._play_button.set_alpha(255)
         self._option_button = Button(
             400, 100,   # Button size
             (button_x_center, 500),   # Button position
             text="Options",
-            font=self._button_font
+            font=self._button_font,
+            method=options_method
         )
         self._quit_button = Button(
             400, 100,   # Button size
             (button_x_center, 650),   # Button position
             text="Quit",
-            font=self._button_font
+            font=self._button_font,
+            method=exit_method
         )
         self._buttons = list()
         self._buttons.append(self._play_button)
@@ -47,6 +56,10 @@ class GameMenu(pygame.Surface):
         self._buttons.append(self._quit_button)
 
     def display(self, screen):
+        self._play_button.mouse_click()
+        self._option_button.mouse_click()
+        self._quit_button.mouse_click()
+
         self._play_button.hover()
         self._option_button.hover()
         self._quit_button.hover()
@@ -56,3 +69,6 @@ class GameMenu(pygame.Surface):
         self._quit_button.display(self)
 
         screen.blit(self, (0, 0))
+
+    def print_bip(self):
+        print("bip")

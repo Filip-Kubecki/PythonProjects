@@ -3,6 +3,7 @@ import pygame
 from config import *
 from resources import TexturesSrc, Style
 from GameWrapper import GameWrapper
+from GameMenu import GameMenu
 
 
 # Pygame setup
@@ -14,6 +15,14 @@ screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 # Game wrapper
 game = GameWrapper(WINDOW_WIDTH, WINDOW_HEIGHT)
 
+# Game main menu
+main_menu = GameMenu(
+    WINDOW_WIDTH,
+    WINDOW_HEIGHT,
+    play_method=(game.toggle_visible),
+    exit_method=(game.stop)
+)
+
 # Game variables
 delta_time = 0  # time in seconds since last frame - used for limiting FPS
 counter = 0
@@ -23,7 +32,7 @@ while game.running:
     # pygame.QUIT event means the user clicked X to close window
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            running = False
+            game.running = False
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
                 counter = 0
@@ -35,8 +44,15 @@ while game.running:
             if game.get_game_over() and event.key == pygame.K_TAB:
                 game.game_over_screen.focus()
 
-    game.game_cycle()
-    screen.blit(game, (0, 0))
+    # game.game_cycle()
+    # screen.blit(game, (0, 0))
+    if not game.get_visible():
+        main_menu.display(
+            screen
+        )
+    else:
+        game.game_cycle()
+        screen.blit(game, (0, 0))
 
     # Update everything on screen
     pygame.display.flip()

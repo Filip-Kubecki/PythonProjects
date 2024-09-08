@@ -5,9 +5,19 @@ from config import *
 
 
 class Button(pygame.Surface):
-    def __init__(self, width, height, position, icon_src=None, text=None, font=None):
+    def __init__(
+        self,
+        width,
+        height,
+        position,
+        icon_src=None,
+        text=None,
+        font=None,
+        method=None
+    ):
         super().__init__((width, height), pygame.SRCALPHA)
         self.position = position
+        self.method = method
 
         self.fill(Style.LIGHT_GREEN)
 
@@ -45,6 +55,8 @@ class Button(pygame.Surface):
     def mouse_click(self):
         if (pygame.mouse.get_pressed()[0] and
                 tools.check_if_mouse_collide(pygame.mouse.get_pos(), self.position, self.get_size())):
+            if self.method is not None:
+                self.on_click()
             return True
         return False
 
@@ -53,3 +65,7 @@ class Button(pygame.Surface):
             self._rect_background.set_alpha(40)
         else:
             self._rect_background.set_alpha(0)
+
+    def on_click(self):
+        if self.method is not None:
+            self.method()

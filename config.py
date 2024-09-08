@@ -9,7 +9,7 @@ SNAKE_START_SPEED = 5  # Smaller number -> faster
 # Window
 WINDOW_WIDTH = 1800
 WINDOW_HEIGHT = 900
-ENABLE_BORDER = True
+ENABLE_BORDER = False
 
 # Pause/Game Over screens
 DIMMED_BACKGROUND_MAX_ALPHA = 150
