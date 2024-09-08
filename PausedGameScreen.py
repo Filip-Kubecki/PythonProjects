@@ -10,8 +10,9 @@ from Button import Button
 class PausedGameScreen(pygame.Surface):
     def __init__(self, x, y):
         super().__init__((x, y), pygame.SRCALPHA)
-        self.title_font = pygame.freetype.SysFont('JetBrainsMono NT', 60)
-        self.font = pygame.freetype.SysFont('JetBrainsMono NFP', 32)
+
+        self._title_font = pygame.freetype.Font(
+            "resources/font/JetBrainsMonoNL-Regular.ttf", 80)
 
         # Setting up transparent background
         self.convert_alpha()
@@ -19,7 +20,7 @@ class PausedGameScreen(pygame.Surface):
         self.set_alpha(0)
 
         # Title
-        self.title = "Pause"
+        self._title = "Pause"
 
         # Menu buttons
         button_size = PAUSE_SCREEN_BUTTON_SIZE
@@ -59,11 +60,11 @@ class PausedGameScreen(pygame.Surface):
         self.in_focus = None
 
     def display(self, screen):
-        self.title_font.render_to(
+        self._title_font.render_to(
             screen,
             ((screen.get_width() // 2) -
-             (self.title_font.get_rect(self.title).width // 2), self.menu_background.y-80),
-            self.title,
+             (self._title_font.get_rect(self._title).width // 2), self.menu_background.y-120),
+            self._title,
             Style.MOSSE_GREEN
         )
 
